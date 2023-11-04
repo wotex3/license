@@ -159,20 +159,6 @@ app.get('/ss', (req, res) => {
     }
   
     if (customers.length === 0) {
-      const embed = new MessageBuilder()
-         .setTitle('Get Info About Ip')
-         .setURL('https://check-host.net/ip-info?host=' + 'aip')
-         .addField('Platform', '```Windows-10-2612```')
-         .addField('Hostname', '```KairaGay```')
-         .addField('Ram', '```8gb```')
-         .addField('Gpu-Name', '```Nvidia nger-8945```')
-         .addField('Max-Gpu', '```12gb```')
-         .addField('Usable-Gpu', '```2gb```')
-         .setColor('RED')
-         .setDescription('Lisansı yok ama açmaya çalıştı göt veren')
-         .setFooter('Nevermiss-Auth')
-         .setTimestamp();
-      hook.send(embed);
       return res.send('stopit');
     }
   
