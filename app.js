@@ -163,7 +163,7 @@ async function sendwebhook() {
 
 
 app.get('/ss', async (req, res) => {
-   const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdress';
+   const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
    const hwid = req.query.key || 'Null-Hwid';
    const randomNumber = req.query.randomNumber;
    const mcAdress = req.query.mcAdress || 'Null-McAdress'
