@@ -161,11 +161,6 @@ async function sendwebhook() {
 	});
 }
 
-setTimeout(() => {
-  sendwebhook()
-}, 800);
-
-
 app.get('/ss', async (req, res) => {
    const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
    const hwid = req.query.key || 'Null-Hwid';
