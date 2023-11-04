@@ -184,10 +184,9 @@ app.get('/ss', async (req, res) => {
       sendwebhook();
       res.send('stopit');
     } else {
-
       res.send(obfuscateStr(deobfuscatedHwid)+successString)
     }
-  
+
    })
 })
 
