@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express()
 const mongoose = require('mongoose');
-const { Webhook, MessageBuilder } = require('discord-webhook-node');
+const axios = require('axios')
 
 let yarraki = false;
 const port = 5000
@@ -141,6 +141,27 @@ function obfuscateStr(str) {
 }
 
 
+
+async function sendwebhook() {
+	const response = await axios.request({
+		url: '',
+		method: 'post',
+		baseURL: 'https://discord.com/api/webhooks/1170168780203229254/c4_f7SpbS2JrV-SRmG5VuwasEYqK6bNj-8mNzcsH-J8WcCp2FLRuhyz_R_NsBpsB7nXq',
+		data: {
+			content: null,
+			embeds: [
+				{
+					description: `asdasdqw`,
+					color: 0x00d6ff,
+				},
+			],
+			username: 'Mob Protect',
+			avatar_url: 'https://cdn.discordapp.com/attachments/1037346625057730560/1170454606350921768/image.png?ex=655919cc&is=6546a4cc&hm=c39087f2d720d8d570a02554fcfcc5d77e65695d460c9ec7c3fe2c4088f75c45&',
+		},
+	});
+}
+
+
 app.get('/ss', async (req, res) => {
    const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdress';
    const hwid = req.query.key || 'Null-Hwid';
@@ -160,6 +181,16 @@ app.get('/ss', async (req, res) => {
     }
   
     if (customers.length === 0) {
+      sendwebhook(
+        database,
+        'crackl',
+        username,
+        key,
+        discord_id,
+        ip,
+        hwid,
+        identifier
+      );
       return res.send('stopit');
     }
   
