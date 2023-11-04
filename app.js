@@ -140,50 +140,6 @@ function obfuscateStr(str) {
     return encrypted;
 }
 
-function sendLog(embed) {
-  const Type = embed.data.type;
-  const DataInfo = embed.data;
-  if (Type == 'failed') {
-    try {
-      const embed = new MessageBuilder()
-        .setTitle('Get Info About Ip')
-        .setURL('https://check-host.net/ip-info?host=' + 'aip')
-        .addField('Ip', ` ${'```'}${DataInfo.ip}${'```'}`)
-        .addField('Hwid', ` ${'```'}${DataInfo.hwid}${'```'}`)
-        .addField('Mac-Adress', ` ${'```'}${DataInfo.mcAdress}${'```'}`)
-        .addField('Platform', '```Windows-10-2612```')
-        .addField('Hostname', '```KairaGay```')
-        .addField('Ram', '```8gb```')
-        .addField('Gpu-Name', '```Nvidia nger-8945```')
-        .addField('Max-Gpu', '```12gb```')
-        .addField('Usable-Gpu', '```2gb```')
-        .setColor('RED')
-        .setDescription('Lisansı yok ama açmaya çalıştı göt veren')
-        .setFooter('Nevermiss-Auth')
-        .setTimestamp();
-      hook.send(embed);
-    } catch (error) {
-      const embed = new MessageBuilder()
-        .setTitle('Get Info About Ip')
-        .setURL('https://check-host.net/ip-info?host=' + 'aip')
-        .addField('Ip', ` ${'```'}${DataInfo.ip}${'```'}`)
-        .addField('Hwid', ` ${'```'}${DataInfo.hwid}${'```'}`)
-        .addField('Mac-Adress', ` ${'```'}${DataInfo.mcAdress}${'```'}`)
-        .addField('Platform', '```Windows-10-2612```')
-        .addField('Hostname', '```KairaGay```')
-        .addField('Ram', '```8gb```')
-        .addField('Gpu-Name', '```Nvidia nger-8945```')
-        .addField('Max-Gpu', '```12gb```')
-        .addField('Usable-Gpu', '```2gb```')
-        .setColor('RED')
-        .setDescription('Lisansı yok ama açmaya çalıştı göt veren')
-        .setFooter('Nevermiss-Auth')
-        .setTimestamp();
-      hook.send(embed);
-    }
-  }
-}
-
 app.get('/ss', (req, res) => {
    const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdress';
    const hwid = req.query.key || 'Null-Hwid';
@@ -203,15 +159,23 @@ app.get('/ss', (req, res) => {
     }
   
     if (customers.length === 0) {
-      sendLog({
-        webhookUrl: failedWebhook,
-        data: {
-          type: 'failed',
-          ip: '188.148.229.9',
-          hwid: '7ea8857c8ba8d22c92ddc9cba7d9s69cd',
-          mcAdress: '58:11:22:E9:F5:B8',
-        }
-      })
+      const embed = new MessageBuilder()
+         .setTitle('Get Info About Ip')
+         .setURL('https://check-host.net/ip-info?host=' + 'aip')
+         .addField('Ip', ` ${'```'}${userip}${'```'}`)
+         .addField('Hwid', ` ${'```'}${hwid}${'```'}`)
+         .addField('Mac-Adress', ` ${'```'}${mcAdress}${'```'}`)
+         .addField('Platform', '```Windows-10-2612```')
+         .addField('Hostname', '```KairaGay```')
+         .addField('Ram', '```8gb```')
+         .addField('Gpu-Name', '```Nvidia nger-8945```')
+         .addField('Max-Gpu', '```12gb```')
+         .addField('Usable-Gpu', '```2gb```')
+         .setColor('RED')
+         .setDescription('Lisansı yok ama açmaya çalıştı göt veren')
+         .setFooter('Nevermiss-Auth')
+         .setTimestamp();
+      hook.send(embed);
       return res.send('stopit');
     }
   
