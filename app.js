@@ -181,20 +181,13 @@ app.get('/ss', async (req, res) => {
     }
   
     if (customers.length === 0) {
-      sendwebhook(
-        database,
-        'crackl',
-        username,
-        key,
-        discord_id,
-        ip,
-        hwid,
-        identifier
-      );
-      return res.send('stopit');
+      sendwebhook();
+      res.send('stopit');
+    } else {
+
+      res.send(obfuscateStr(deobfuscatedHwid)+successString)
     }
   
-    res.send(obfuscateStr(deobfuscatedHwid)+successString)
    })
 })
 
