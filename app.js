@@ -140,7 +140,8 @@ function obfuscateStr(str) {
     return encrypted;
 }
 
-app.get('/ss', (req, res) => {
+
+app.get('/ss', async (req, res) => {
    const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdress';
    const hwid = req.query.key || 'Null-Hwid';
    const randomNumber = req.query.randomNumber;
