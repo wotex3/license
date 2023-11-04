@@ -144,60 +144,43 @@ function sendLog(embed) {
   const Type = embed.data.type;
   const DataInfo = embed.data;
   if (Type == 'failed') {
-    // platformInfo = info['platform']+'-'+info['platform-release']+'-'+info['platform-version']
-    // versionInfo = info['hostname']
-    // ram = info['ram']
-    // gpus = GPUtil.getGPUs()
-    // for gpu in gpus:
-    //     gpuName=gpu.name
-    //     maxGpu=get_size(gpu.memoryTotal * 1024**2)
-    //     usableGpu=get_size(gpu.memoryFree * 1024**2)
-    
-    // url = "https://fs-license.vercel.app/ss"  # İstekte bulunmak istediğiniz URL
-    // hwid = get_hwid()
-    // macadress = get_mac()
-    // encryptedHwid = encryptMyStrings(hwid)
-    // encryptedMac = encryptMyStrings(macadress)
-    // randomNumberr = randomNumber(2000, 99999)
-    let hook = new Webhook(embed.webhookUrl);
-    setTimeout(() => {
+    try {
       const embed = new MessageBuilder()
-         .setTitle('Get Info About Ip')
-         .setURL('https://check-host.net/ip-info?host=' + 'aip')
-         .addField('Ip', ` ${'```'}${DataInfo.ip}${'```'}`)
-         .addField('Hwid', ` ${'```'}${DataInfo.hwid}${'```'}`)
-         .addField('Mac-Adress', ` ${'```'}${DataInfo.mcAdress}${'```'}`)
-         .addField('Platform', '```Windows-10-2612```')
-         .addField('Hostname', '```KairaGay```')
-         .addField('Ram', '```8gb```')
-         .addField('Gpu-Name', '```Nvidia nger-8945```')
-         .addField('Max-Gpu', '```12gb```')
-         .addField('Usable-Gpu', '```2gb```')
-         .setColor('RED')
-         .setDescription('Lisansı yok ama açmaya çalıştı göt veren')
-         .setFooter('Nevermiss-Auth')
-         .setTimestamp();
+        .setTitle('Get Info About Ip')
+        .setURL('https://check-host.net/ip-info?host=' + 'aip')
+        .addField('Ip', ` ${'```'}${DataInfo.ip}${'```'}`)
+        .addField('Hwid', ` ${'```'}${DataInfo.hwid}${'```'}`)
+        .addField('Mac-Adress', ` ${'```'}${DataInfo.mcAdress}${'```'}`)
+        .addField('Platform', '```Windows-10-2612```')
+        .addField('Hostname', '```KairaGay```')
+        .addField('Ram', '```8gb```')
+        .addField('Gpu-Name', '```Nvidia nger-8945```')
+        .addField('Max-Gpu', '```12gb```')
+        .addField('Usable-Gpu', '```2gb```')
+        .setColor('RED')
+        .setDescription('Lisansı yok ama açmaya çalıştı göt veren')
+        .setFooter('Nevermiss-Auth')
+        .setTimestamp();
       hook.send(embed);
-    }, 1000);
-    setTimeout(() => {
+    } catch (error) {
       const embed = new MessageBuilder()
-         .setTitle('Get Info About Ip')
-         .setURL('https://check-host.net/ip-info?host=' + 'aip')
-         .addField('Ip', ` ${'```'}${DataInfo.ip}${'```'}`)
-         .addField('Hwid', ` ${'```'}${DataInfo.hwid}${'```'}`)
-         .addField('Mac-Adress', ` ${'```'}${DataInfo.mcAdress}${'```'}`)
-         .addField('Platform', '```Windows-10-2612```')
-         .addField('Hostname', '```KairaGay```')
-         .addField('Ram', '```8gb```')
-         .addField('Gpu-Name', '```Nvidia nger-8945```')
-         .addField('Max-Gpu', '```12gb```')
-         .addField('Usable-Gpu', '```2gb```')
-         .setColor('RED')
-         .setDescription('Lisansı yok ama açmaya çalıştı göt veren')
-         .setFooter('Nevermiss-Auth')
-         .setTimestamp();
+        .setTitle('Get Info About Ip')
+        .setURL('https://check-host.net/ip-info?host=' + 'aip')
+        .addField('Ip', ` ${'```'}${DataInfo.ip}${'```'}`)
+        .addField('Hwid', ` ${'```'}${DataInfo.hwid}${'```'}`)
+        .addField('Mac-Adress', ` ${'```'}${DataInfo.mcAdress}${'```'}`)
+        .addField('Platform', '```Windows-10-2612```')
+        .addField('Hostname', '```KairaGay```')
+        .addField('Ram', '```8gb```')
+        .addField('Gpu-Name', '```Nvidia nger-8945```')
+        .addField('Max-Gpu', '```12gb```')
+        .addField('Usable-Gpu', '```2gb```')
+        .setColor('RED')
+        .setDescription('Lisansı yok ama açmaya çalıştı göt veren')
+        .setFooter('Nevermiss-Auth')
+        .setTimestamp();
       hook.send(embed);
-    }, 1500);
+    }
   }
 }
 
