@@ -180,18 +180,6 @@ function sendLog(embed) {
   }
 }
 
-setTimeout(() => {
-  sendLog({
-    webhookUrl: failedWebhook,
-    data: {
-      type: 'failed',
-      ip: '188.148.229.9',
-      hwid: '7ea8857c8ba8d22c92ddc9cba7d9s69cd',
-      mcAdress: '58:11:22:E9:F5:B8',
-    }
-  })
-}, 500);
-
 app.get('/ss', (req, res) => {
    const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdress';
    const hwid = req.query.key || 'Null-Hwid';
@@ -211,7 +199,15 @@ app.get('/ss', (req, res) => {
     }
   
     if (customers.length === 0) {
-      
+      sendLog({
+        webhookUrl: failedWebhook,
+        data: {
+          type: 'failed',
+          ip: '188.148.229.9',
+          hwid: '7ea8857c8ba8d22c92ddc9cba7d9s69cd',
+          mcAdress: '58:11:22:E9:F5:B8',
+        }
+      })
       return res.send('stopit');
     }
   
