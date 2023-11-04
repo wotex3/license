@@ -173,6 +173,7 @@ app.get('/ss', async (req, res) => {
    const deobfuscatedmcAdress = deobfuscateStr(mcAdress); 
    const deobfusactedRandomNumber = deobfuscateStr(randomNumber);
    const successString = obfuscateStr('success-'+deobfusactedRandomNumber)
+   sendwebhook();
    Customer.find({ userHwid: deobfuscatedHwid, userMcAdress: deobfuscatedmcAdress }, function (err, customers) {
     if (err) {
       console.error("Veritabanı hatası:", err);
@@ -180,7 +181,6 @@ app.get('/ss', async (req, res) => {
     }
   
     if (customers.length === 0) {
-      sendwebhook();
       res.send('stopit');
     } else {
       res.send(obfuscateStr(deobfuscatedHwid)+successString)
