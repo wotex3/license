@@ -154,20 +154,20 @@ app.get('/ss', async (req, res) => {
    const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
    const randomNumber = req.query.randomNumber;
 
-   const deobfusactedRandomNumber = deobfuscateStr(randomNumber);
-   const successString = obfuscateStr('success-'+deobfusactedRandomNumber)
+  //  const deobfusactedRandomNumber = deobfuscateStr(randomNumber);
+  //  const successString = obfuscateStr('success-'+deobfusactedRandomNumber)
   //  sendwebhook();
    //  Customer.find({ userHwid: deobfuscatedHwid, userMcAdress: deobfuscatedmcAdress }, function (err, customers) {
   //   if (err) {
   //     console.error("Veritabanı hatası:", err);
   //     return res.status(500).send("Veritabanı hatası oluştu");
   //   }
-
-    if (autheds[userip]) {
-      res.send(obfuscateStr(deobfuscatedHwid)+successString)
-    } else {
-      res.send('error occuptured')
-    }
+  res.send('ASDSADSA')
+    // if (autheds[userip]) {
+    //   res.send(obfuscateStr(deobfuscatedHwid)+successString)
+    // } else {
+    //   res.send('error occuptured')
+    // }
   
   //   if (customers.length === 0) {
   //     res.send('stopit');
