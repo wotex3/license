@@ -146,11 +146,11 @@ const failedWebhook = 'https://discord.com/api/webhooks/1170168780203229254/c4_f
 // }
 
 app.get('/ss', async (req, res) => {
-   const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
-   const randomNumber = req.query.randomNumber;
+  //  const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
+  //  const randomNumber = req.query.randomNumber;
 
-   const deobfusactedRandomNumber = deobfuscateStr(randomNumber);
-   const successString = obfuscateStr('success-'+deobfusactedRandomNumber)
+  //  const deobfusactedRandomNumber = deobfuscateStr(randomNumber);
+  //  const successString = obfuscateStr('success-'+deobfusactedRandomNumber)
   //  sendwebhook();
   res.send('ASDASDSA')
    //  Customer.find({ userHwid: deobfuscatedHwid, userMcAdress: deobfuscatedmcAdress }, function (err, customers) {
