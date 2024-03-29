@@ -1,24 +1,10 @@
 const express = require('express');
 const app = express()
-const mongoose = require('mongoose');
 const axios = require('axios')
 
 let yarraki = false;
 const port = 5000
-const connectionLink = 'mongodb+srv://whit3discorddd:Berkberk2002@cluster0.l6ryzv8.mongodb.net/'
 const failedWebhook = 'https://discord.com/api/webhooks/1170168780203229254/c4_f7SpbS2JrV-SRmG5VuwasEYqK6bNj-8mNzcsH-J8WcCp2FLRuhyz_R_NsBpsB7nXq'
-
-mongoose.connect(connectionLink, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log("MongoDB'ye başarıyla bağlandı!");
-    yarraki = true
-    // Şimdi burada MongoDB'ye sorgularınızı ve işlemlerinizi gerçekleştirebilirsiniz.
-  })
-  .catch((err) => {
-    console.error("MongoDB bağlantısı sırasında hata oluştu:", err);
-  });
-
-const Customer = require("./models/newCustomer.js");
 
 const rateLimit = require('express-rate-limit');
 const limiter = rateLimit({
@@ -169,24 +155,23 @@ app.get('/ss', async (req, res) => {
    if (!hwid && !randomNumber && !userip && !mcAdress) {
      return res.send('yanarimyanarim Error (1252)')
    }
-   const deobfuscatedHwid = deobfuscateStr(hwid);
-   const deobfuscatedmcAdress = deobfuscateStr(mcAdress); 
    const deobfusactedRandomNumber = deobfuscateStr(randomNumber);
    const successString = obfuscateStr('success-'+deobfusactedRandomNumber)
-   sendwebhook();
-   Customer.find({ userHwid: deobfuscatedHwid, userMcAdress: deobfuscatedmcAdress }, function (err, customers) {
-    if (err) {
-      console.error("Veritabanı hatası:", err);
-      return res.status(500).send("Veritabanı hatası oluştu");
-    }
+  //  sendwebhook();
+  res.send('ASDASDSA')
+   //  Customer.find({ userHwid: deobfuscatedHwid, userMcAdress: deobfuscatedmcAdress }, function (err, customers) {
+  //   if (err) {
+  //     console.error("Veritabanı hatası:", err);
+  //     return res.status(500).send("Veritabanı hatası oluştu");
+  //   }
   
-    if (customers.length === 0) {
-      res.send('stopit');
-    } else {
-      res.send(obfuscateStr(deobfuscatedHwid)+successString)
-    }
+  //   if (customers.length === 0) {
+  //     res.send('stopit');
+  //   } else {
+  //     res.send(obfuscateStr(deobfuscatedHwid)+successString)
+  //   }
 
-   })
+  //  })
 })
 
 app.listen(port, () => {
