@@ -162,12 +162,11 @@ app.get('/ss', async (req, res) => {
   //     console.error("Veritabanı hatası:", err);
   //     return res.status(500).send("Veritabanı hatası oluştu");
   //   }
-  res.send(userip)
-    // if (autheds[userip]) {
-    //   res.send(obfuscateStr(deobfuscatedHwid)+successString)
-    // } else {
-    //   res.send('error occuptured')
-    // }
+  if (autheds[userip]) {
+    res.send(successString)
+  } else {
+    res.send('error occuptured')
+  }
   
   //   if (customers.length === 0) {
   //     res.send('stopit');
