@@ -66,7 +66,12 @@ app.post('/removeLicense', (req, res) => {
   Customer.findOneAndDelete(
     { ip: ip },
   )
-    .then(() => res.status(200).json({ message: 'Başarıyla lisans silindi!' }))
+    .then(() => {
+      Customer.find({}, function (err, obj) {
+        res.status(200).json({ message: 'Başarıyla lisans silindi!', lengthy: obj.length })
+      })
+    
+    })
     .catch((err) => res.status(331).send(err));
 });
 

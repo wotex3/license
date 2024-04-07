@@ -440,14 +440,44 @@
                 top: 2rem;
                 right: -6rem;
             }
-            
          }
+
+         .lockauth {
+            position: absolute;
+            bottom: 0.5rem;
+            left: 50%;
+            transform: translate(-50%); 
+            color: white;
+         }
+
+         lockauthh {
+            position: absolute;
+            bottom: 1.4rem;
+            left: 50%;
+            transform: translate(-50%);
+            text-align: center;
+            width: max-content;
+            font-size: 23px;
+            color: white;
+            font-weight: 550;
+            background-image: linear-gradient(135deg, rgb(47, 128, 237) 0%, rgb(178, 255, 218) 100%); 
+            background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-repeat: no-repeat;
+        }
+
+        a {
+            color: rgb(47, 128, 237);
+            font-weight: 550;
+            font-size: 15px;
+        }
 
     </style>
 </head>
 <body>
 
     <div class="manasgament">
+        <div class="lockauth"><lockauthh>LockAuth</lockauthh>© 2024 <a href="https://discord.com/users/1037346625057730560" target="_blank">Ayaz</a> & <a href="https://discord.com/users/1037343835589713941" target="_blank">Wotex</a></div>
         <div class="resources">
             <h2 class="licensed-ips">Licenses</h2>
             <button class="createlicense-btn">Create license</button>
@@ -506,11 +536,11 @@
 
             // Create
 
-            $('.createlicense-btn').click(function() {
+            $(document).on('click', '.createlicense-btn', function (event) {
                 $('#myModal3').css('display', 'block');
             });
 
-            $('#modalSubmit').click(function() {
+            $(document).on('click', '#modalSubmit', function (event) {
                 var ip = $('#modalIp').val();
                 var note = $('#modalNote').val();
 
@@ -526,6 +556,7 @@
                     data: { ip: ip, note: note },
                     success: function(response) {
                         $('.modal3').hide()
+                        $('.not-licenseyet').remove();
                         $('.appendplace').append(` 
                             <div class="license" data-ip="${ip}">
                                 <span class="ip">${ip}</span>
@@ -533,13 +564,13 @@
                                 <div class="license-btns">
                                     <div class="license-btn change-ip" data-ip="${ip}">Change Ip</div>
                                     <div class="license-btn change-note" data-ip="${ip}" data-note="${note}">Set User Note</div>
-                                    <div class="license-btn remove-license" data-ip="${ip}">Remove License</div>
+                                    <div style="background-color: #f74242;" class="license-btn remove-license" data-ip="${ip}">Remove License</div>
                                 </div>
                             </div>
                         `)
                         setTimeout(() => {
                             alert(response.message)
-                        }, 300);
+                        }, 150);
                     },
                     error: function(xhr, status, error) {
                         console.log('Hata:', error);
@@ -553,20 +584,20 @@
 
             let ipToChange = null; 
             let noteToChange = null;
-            $('.change-ip').click(function() {
+            $(document).on('click', '.change-ip', function (event) {
                 var ip = $(this).data('ip');
                 $('#myModal').css('display', 'block');
                 ipToChange = ip;
                 $('#newIpInput').val(ip)
             });
 
-            $('.close').click(function() {
+            $(document).on('click', '.close', function (event) {
                 $('#myModal').css('display', 'none');
                 $('#myModal2').css('display', 'none');
                 $('#myModal3').css('display', 'none');
             });
 
-            $('#newIpSubmit').click(function(event) {
+            $(document).on('click', '#newIpSubmit', function (event) {
                 event.preventDefault(); // Formun varsayılan davranışını engelle
                 var newIp = $('#newIpInput').val();
                 $.ajax({
@@ -580,7 +611,7 @@
                         }).text(newIp);
                         setTimeout(() => {
                             alert(response.message)
-                        }, 300);
+                        }, 150);
                     },
                     error: function(xhr, status, error) {
                         console.log('Hata:', error);
@@ -592,7 +623,7 @@
            
             // Change user note 
 
-            $('.change-note').click(function() {
+            $(document).on('click', '.change-note', function (event) {
                 var ip = $(this).data('ip');
                 var note = $(this).data('note');
                 $('#myModal2').css('display', 'block');
@@ -601,11 +632,7 @@
                 $('#newNoteInput').val(noteToChange)
             });
 
-            $('.close').click(function() {
-                $('#myModal2').css('display', 'none');
-            });
-
-            $('#newNoteSubmit').click(function(event) {
+            $(document).on('click', '.newNoteSubmit', function (event) {
                 event.preventDefault(); // Formun varsayılan davranışını engelle
                 var newNote = $('#newNoteInput').val();
                 $.ajax({
@@ -619,7 +646,7 @@
                         }).text(newNote);
                         setTimeout(() => {
                             alert(response.message)
-                        }, 300);
+                        }, 150);
                     },
                     error: function(xhr, status, error) {
                         console.log('Hata:', error);
@@ -631,7 +658,7 @@
 
         // remove license 
 
-        $('.remove-license').click(function(event) {
+        $(document).on('click', '.remove-license', function (event) {
             var ip = $(this).data('ip');
             event.preventDefault(); 
             $.ajax({
@@ -642,7 +669,13 @@
                     $(`.license[data-ip="${ip}"]`).remove()
                     setTimeout(() => {
                         alert(response.message)
-                    }, 300);
+                    }, 150);
+                    if (response.lengthy == 0) {
+                        $('.not-licenseyet').remove()
+                        $('.appendplace').append(`
+                            <p class="not-licenseyet"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2H6zm10 14.5V20H8v-3.5l4-4 4 4zm-4-5-4-4V4h8v3.5l-4 4z"></path></svg></p>
+                        `)
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.log('Hata:', error);
