@@ -3,11 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>First Layout</title>
+    <title>Login</title>
     <style>   
 
+        @import "https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap";
+
+        * {
+            padding: 0;
+            text-decoration: none;
+            margin: 0;
+            border: 0;
+            outline: none;
+            box-sizing: border-box;
+            font-family: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
         body {
-            background-color: red;
+            background-color: #151516f9;
         }
 
         #players_login {
@@ -30,13 +47,13 @@
         }
 
 
-        .input {
+        #input {
             position: relative;
             top: 0.1rem;
             left: 50%;
             transform: translate(-50%);
             width: 95%;
-            height: 40%;
+            height: 2.3rem;
             font-weight: 500;
             padding-left: 0.6rem;
             border-radius: 3px;
@@ -45,9 +62,9 @@
             text-align: center;
         }
 
-        .button {
+        #button {
             position: relative;
-            bottom: -0.95rem;
+            bottom: -0.8rem;
             left: 50%;
             transform: translate(-50%);
             width: 95%;
@@ -60,7 +77,7 @@
             transition: all 120ms ease-in;
         }
 
-        .button:hover {
+        #button:hover {
             background-color: #0a0a0b;
             width: 103%;
             height: 2.3rem;
@@ -68,13 +85,10 @@
     </style>
 </head>
 <body>
-    <h1>First Layout</h1>
-
     <div id="players_login">
-        <img src="https://sortitoutsi.b-cdn.net/uploads/face/454424.png" class="logo" alt="">
         <div class="players-filter">
             <form action="/submit" method="post">
-                <input type="text" name="inputValue" id="input" placeholder="Type 'xxxx'">
+                <input type="text" name="inputValue" id="input" value="DWAZqDyR0F8SzdcBlti2" placeholder="Type Your Api Key">
                 <button type="submit" id="button">Submit</button>
             </form>
         </div>

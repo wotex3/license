@@ -3,14 +3,573 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Second Layout</title>
+    <title>Management</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>   
+
+        @import "https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap";
+
+        * {
+            padding: 0;
+            text-decoration: none;
+            margin: 0;
+            border: 0;
+            outline: none;
+            box-sizing: border-box;
+            font-family: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        *::-webkit-scrollbar-track {
+            width: 0rem;
+        }
+
+        *::-webkit-scrollbar {
+            width: 0rem;
+        }
+
+        *::-webkit-scrollbar-thumb {
+            background-color: transparent;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            background-color: #151516f9;
+        }
+
+        .managament {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        
+        .resources {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            height: 80%;
+            background-color: #151516;
+            border: 5px solid #151516;
+            border-radius: 3px;
+        }
+
+        .resources h2 {
+            position: absolute;
+            top: 1.15rem;
+            text-align: center;
+            font-size: 18px;
+            color: white;
+            font-weight: 550;
+            width: 100%;
+        }
+
+        .appendplace {
+            position: absolute;
+            top: 4rem;
+            width: 100%;
+            height: 42.6rem;
+            overflow: auto;
+        }
+
+        .license {
+            position: relative;
+            width: 100%;
+            height: 3rem;
+            background-color: #1a1a1b;
+            margin-bottom: 0.5rem;
+            border-radius: 3px;
+        }
+
+        .license>span {
+            position: absolute;
+            top: 50%;
+            left: 1rem;
+            width: 5rem;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            transform: translate(-0%, -50%);
+        }
+
+        
+        .license>p {
+            position: absolute;
+            top: 50%;
+            left: 8.2rem;
+            width: max-content;
+            color: rgb(201, 198, 198);
+            font-size: 11px;
+            font-weight: 550;
+            transform: translate(-0%, -50%);
+        }
+
+        .license-btns {
+            position: relative;
+            top: 0;
+            float: right;
+            right: 0.5rem;
+            width: 22rem;
+            z-index: 999;
+            height: 100%;
+        }
+
+        .license-btn {
+            position: relative;
+            float: right;
+            top: 50%;
+            right: 0;
+            transform: translate(-0%, -50%);
+            width: max-content;
+            height: 65%;
+            margin-left: 1rem;
+            background-color: #0b0b0c;
+            border-radius: 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 0 6px;
+            font-size: 12px;
+            font-weight: 550;
+            cursor: pointer;
+        }
+
+        .license-btn:hover {
+            background-color: #0b0b0c9d;
+        }
+
+        /* Modal container */
+        .modal {
+            display: none; /* Modal başlangıçta görünmez olsun */
+            position: fixed; /* Diğer içeriklerin üzerinde sabitlenmiş olarak kalsın */
+            z-index: 1; /* Diğer içeriklerin üzerinde yer alması için z-indeksini artırın */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Arkaplanı koyu bir renk ve hafif saydamlık yapın */
+            overflow: auto; /* İçeriğin modal dışında görüntülenmesini sağlayın */
+        }
+
+        /* Modal içeriği */
+        .modal-content {
+            position: relative;
+            background-color: #0b0b0c;
+            margin: 15% auto; /* Dikey ve yatay konumu ayarlayın */
+            padding: 20px;
+            height: 100px;
+            border: 1px solid #88888852;
+            width: 240px; /* Modalın genişliğini ayarlayın */
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+
+        #newIpInput {
+            position: relative;
+            top: -0.2rem;
+            left: 2rem;
+            background-color: #0b0b0c;
+            border: 1px solid #88888852;
+            color: white; 
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            width: 8rem;
+            height: 1.5rem;
+            text-align: center;
+        }
+
+        #newIpSubmit {
+            position: relative;
+            bottom: -1.2rem;
+            left: 3rem;
+            font-size: 11px;
+            background-color: #0b0b0c;
+            border: 1px solid #88888852;
+            color: white; 
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            width: 6rem;
+            height: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Kapatma düğmesi */
+        .close {
+            position: relative;
+            top: -1.4rem;
+            right: -0.85rem;
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        #newIpSubmit:hover {
+            background-color: #111113d0;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* User note */
+
+        .modal2 {
+            display: none; /* Modal başlangıçta görünmez olsun */
+            position: fixed; /* Diğer içeriklerin üzerinde sabitlenmiş olarak kalsın */
+            z-index: 1; /* Diğer içeriklerin üzerinde yer alması için z-indeksini artırın */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Arkaplanı koyu bir renk ve hafif saydamlık yapın */
+            overflow: auto; /* İçeriğin modal dışında görüntülenmesini sağlayın */
+        }
+
+        /* Modal içeriği */
+        .modal2-content {
+            position: relative;
+            background-color: #0b0b0c;
+            margin: 15% auto; /* Dikey ve yatay konumu ayarlayın */
+            padding: 20px;
+            height: 100px;
+            border: 1px solid #88888852;
+            width: 240px; /* Modalın genişliğini ayarlayın */
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+
+        #newNoteInput {
+            position: relative;
+            top: -0.2rem;
+            left: 1rem;
+            background-color: #0b0b0c;
+            border: 1px solid #88888852;
+            color: white; 
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            width: 10rem;
+            height: 1.5rem;
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        #newNoteSubmit {
+            position: relative;
+            bottom: -1.2rem;
+            left: 3rem;
+            font-size: 11px;
+            background-color: #0b0b0c;
+            border: 1px solid #88888852;
+            color: white; 
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            width: 6rem;
+            height: 1.5rem;
+            cursor: pointer;
+        }
+
+        #newNoteSubmit:hover {
+            background-color: #111113d0;
+        }
+
+        /* Create license */
+
+        .createlicense-btn {
+            position: absolute;
+            top: 2.8rem;
+            left: 50%;
+            transform: translate(-50%);
+            width: 7rem;
+            height: 2rem;
+            background-color: #0b0b0c;
+            border: 1px solid #88888852;
+            color: white;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .createlicense-btn:hover {
+            background-color: #111113c7;
+        }
+
+        .modal3 {
+            display: none; /* Modal başlangıçta görünmez olsun */
+            position: fixed; /* Diğer içeriklerin üzerinde sabitlenmiş olarak kalsın */
+            z-index: 1; /* Diğer içeriklerin üzerinde yer alması için z-indeksini artırın */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Arkaplanı koyu bir renk ve hafif saydamlık yapın */
+            overflow: auto; /* İçeriğin modal dışında görüntülenmesini sağlayın */
+        }
+
+        /* Modal içeriği */
+        .modal3-content {
+            position: relative;
+            background-color: #0b0b0c;
+            margin: 15% auto; /* Dikey ve yatay konumu ayarlayın */
+            padding: 20px;
+            height: 150px;
+            border: 1px solid #88888852;
+            width: 240px; /* Modalın genişliğini ayarlayın */
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+
+        #modalIp {
+            position: relative;
+            top: -0.2rem;
+            left: 1rem;
+            background-color: #0b0b0c;
+            border: 1px solid #88888852;
+            color: white; 
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            width: 10rem;
+            height: 1.5rem;
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        #modalNote {
+            position: relative;
+            top: 1.2rem;
+            left: 1rem;
+            background-color: #0b0b0c;
+            border: 1px solid #88888852;
+            color: white; 
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            width: 10rem;
+            height: 1.5rem;
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        #modalSubmit {
+            position: relative;
+            bottom: -2.7rem;
+            left: 3rem;
+            font-size: 11px;
+            background-color: #0b0b0c;
+            border: 1px solid #88888852;
+            color: white; 
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            width: 6rem;
+            height: 1.5rem;
+            cursor: pointer;
+        }
+
+        #modalSubmit:hover {
+            background-color: #111113d0;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Second Layout</h1>
-    <ul>
-        <% data.forEach(function(item) { %>
-            <li><%= item %></li>
-        <% }); %>
-    </ul>
+
+    <div class="manasgament">
+        <button class="createlicense-btn">Create license</button>
+        <div class="resources">
+            <h2>Licensed ips</h2>
+            <div class="appendplace">
+
+                <% data.forEach(function(item) { %>
+                    <div class="license" data-ip="<%= item.ip %>">
+                        <span class="ip"><%=item.ip%></span>
+                        <p class="note"><%= item.user_note %></p>
+                        <div class="license-btns">
+                            <div class="license-btn change-ip" data-ip="<%= item.ip %>">Change Ip</div>
+                            <div class="license-btn change-note" data-ip="<%= item.ip %>" data-note="<%= item.user_note %>">Set User Note</div>
+                            <div class="license-btn remove-license" data-ip="<%= item.ip %>">Remove License</div>
+                        </div>
+                    </div>
+                <% }); %>  
+            </div>
+        </div>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form id="changeIpForm">
+                    <input type="text" id="newIpInput" name="newIp" placeholder="Type new ip">
+                    <button type="submit" id="newIpSubmit">Submit</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div id="myModal2" class="modal2">
+            <div class="modal2-content">
+                <span class="close">&times;</span>
+                <form id="changeNoteForm">
+                    <input type="text" id="newNoteInput" name="newIp" placeholder="Type new user note">
+                    <button type="submit" id="newNoteSubmit">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="myModal3" class="modal3">
+            <div class="modal3-content">
+                <span class="close">&times;</span>
+                <form id="createForm">
+                    <input type="text" id="modalIp" name="ip" placeholder="Type new ip">
+                    <input type="text" id="modalNote" name="ip" placeholder="Type new user note">
+                    <button type="submit" id="modalSubmit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+          $(document).ready(function() {
+
+            // Create
+
+            $('.createlicense-btn').click(function() {
+                $('#myModal3').css('display', 'block');
+            });
+
+            $('#modalSubmit').click(function() {
+                var ip = $('#modalIp').val();
+                var note = $('#modalNote').val();
+
+                if (ip.length < 5) {
+                    return alert('En az 5 hanelik ip yazman gerekiyor')
+                }
+                if (note.length < 3) {
+                    return alert('En az 3 harf yazman lazım nota')
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/createLicense',
+                    data: { ip: ip, note: note },
+                    success: function(response) {
+                        $('.modal3').hide()
+                        $('.appendplace').append(` 
+                            <div class="license" data-ip="${ip}">
+                                <span class="ip">${ip}</span>
+                                <p class="note">${note}</p>
+                                <div class="license-btns">
+                                    <div class="license-btn change-ip" data-ip="${ip}">Change Ip</div>
+                                    <div class="license-btn change-note" data-ip="${ip}" data-note="${note}">Set User Note</div>
+                                    <div class="license-btn remove-license" data-ip="${ip}">Remove License</div>
+                                </div>
+                            </div>
+                        `)
+                        setTimeout(() => {
+                            alert(response.message)
+                        }, 300);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Hata:', error);
+                        console.error('Hata:', error);
+                    }
+                });
+            });
+
+
+            // Change ip
+
+            let ipToChange = null; 
+            let noteToChange = null;
+            $('.change-ip').click(function() {
+                var ip = $(this).data('ip');
+                $('#myModal').css('display', 'block');
+                ipToChange = ip;
+                $('#newIpInput').val(ip)
+            });
+
+            $('.close').click(function() {
+                $('#myModal').css('display', 'none');
+            });
+
+            $('#newIpSubmit').click(function(event) {
+                event.preventDefault(); // Formun varsayılan davranışını engelle
+                var newIp = $('#newIpInput').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/changeIp',
+                    data: { ipToChange: ipToChange, newIp: newIp },
+                    success: function(response) {
+                        $('#myModal').css('display', 'none');
+                        $('.ip').filter(function() {
+                            return $(this).text() === ipToChange;
+                        }).text(newIp);
+                        setTimeout(() => {
+                            alert(response.message)
+                        }, 300);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Hata:', error);
+                        console.error('Hata:', error);
+                    }
+                });
+            });
+
+           
+            // Change user note 
+
+            $('.change-note').click(function() {
+                var ip = $(this).data('ip');
+                var note = $(this).data('note');
+                $('#myModal2').css('display', 'block');
+                ipToChange = ip;
+                noteToChange = note;
+                $('#newNoteInput').val(noteToChange)
+            });
+
+            $('.close').click(function() {
+                $('#myModal2').css('display', 'none');
+            });
+
+            $('#newNoteSubmit').click(function(event) {
+                event.preventDefault(); // Formun varsayılan davranışını engelle
+                var newNote = $('#newNoteInput').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/changeNote',
+                    data: { ip: ipToChange, newNote: newNote },
+                    success: function(response) {
+                        $('#myModal2').css('display', 'none');
+                        $('.note').filter(function() {
+                            return $(this).text() === noteToChange;
+                        }).text(newNote);
+                        setTimeout(() => {
+                            alert(response.message)
+                        }, 300);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Hata:', error);
+                        console.error('Hata:', error);
+                    }
+                });
+            });
+        });
+
+        // remove license 
+
+        $('.remove-license').click(function(event) {
+            var ip = $(this).data('ip');
+            event.preventDefault(); 
+            $.ajax({
+                type: 'POST',
+                url: '/removeLicense',
+                data: { ip: ip },
+                success: function(response) {
+                    $(`.license[data-ip="${ip}"]`).remove()
+                    setTimeout(() => {
+                        alert(response.message)
+                    }, 300);
+                },
+                error: function(xhr, status, error) {
+                    console.log('Hata:', error);
+                    console.error('Hata:', error);
+                }
+            });
+        })
+    </script> 
 </body>
 </html>
