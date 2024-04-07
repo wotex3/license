@@ -20,10 +20,17 @@ const apiKeys = {
 
 app.get('/test', async (req, res) => {
   const newCustomer = new Customer({
-    ip: '83.251.50.65',
-    userNote: 'user note',
+    server_ip: server_ip,
+    server_customer: server_customer,
+    server_date: server_date,
+    server_label: server_label,
+    customer_api_key: api_key,
+    config: DefaultConfig,
   });
-  res.send('XDD')
+  newCustomer
+    .save()
+    .then(() => res.send("ok"))
+    .catch((err) => res.send(err + " Mongoose Error"));
 })
 
 //   Customer.find({ server_customer: id }, function (err, obj) {
