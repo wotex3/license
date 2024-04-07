@@ -12,10 +12,6 @@ app.use(cors())
 
 mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.net/', () => {
   console.log("connection to mongodb finished");
-  const newCustomer = new Customer({
-    ip: '83.251.50.65',
-    userNote: 'user note',
-  });
 });
 
 const apiKeys = {
@@ -23,7 +19,11 @@ const apiKeys = {
 }
 
 app.get('/test', async (req, res) => {
-  res.send('ASDASDAS')
+  const newCustomer = new Customer({
+    ip: '83.251.50.65',
+    userNote: 'user note',
+  });
+  res.send('XDD')
 })
 
 //   Customer.find({ server_customer: id }, function (err, obj) {
