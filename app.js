@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express()
 const axios = require('axios')
+const NewAdmin = require("../models/NewAdmin.js");
 
 const port = 5000
 const failedWebhook = 'https://discord.com/api/webhooks/1170168780203229254/c4_f7SpbS2JrV-SRmG5VuwasEYqK6bNj-8mNzcsH-J8WcCp2FLRuhyz_R_NsBpsB7nXq'
@@ -93,62 +94,49 @@ encryptionTable = {
  }
  
 function deobfuscateStr(str) {
-   var deobfuscatedStr = '';
-   var i = 0;
-   while (i < str.length) {
-     var found = false;
-     for (var key in decryptionTable) {
-       if (str.startsWith(key, i)) {
-         deobfuscatedStr += decryptionTable[key];
-         i += key.length;
-         found = true;
-         break;
-       }
-     }
-     if (!found) {
-       deobfuscatedStr += str.charAt(i);
-       i++;
-     }
-   }
-   return deobfuscatedStr;
+  var deobfuscatedStr = '';
+  var i = 0;
+  while (i < str.length) {
+    var found = false;
+    for (var key in decryptionTable) {
+      if (str.startsWith(key, i)) {
+        deobfuscatedStr += decryptionTable[key];
+        i += key.length;
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      deobfuscatedStr += str.charAt(i);
+      i++;
+    }
+  }
+  return deobfuscatedStr;
 }
  
 function obfuscateStr(str) {
-   let encrypted = "";
-    for (let char of str) {
-        if (encryptionTable[char]) {
-            encrypted += encryptionTable[char];
-        } else {
-            encrypted += char;
-        }
-    }
-    return encrypted;
+  let encrypted = "";
+  for (let char of str) {
+      if (encryptionTable[char]) {
+          encrypted += encryptionTable[char];
+      } else {
+          encrypted += char;
+      }
+  }
+  return encrypted;
 }
 
+const mongoose = require("mongoose");
 
-
-// async function sendwebhook() {
-// 	const response = await axios.request({
-// 		url: '',
-// 		method: 'post',
-// 		baseURL: 'https://discord.com/api/webhooks/1170168780203229254/c4_f7SpbS2JrV-SRmG5VuwasEYqK6bNj-8mNzcsH-J8WcCp2FLRuhyz_R_NsBpsB7nXq',
-// 		data: {
-// 			content: null,
-// 			embeds: [
-// 				{
-// 					description: `asdasdqw`,
-// 					color: 0x00d6ff,
-// 				},
-// 			],
-// 			username: 'Mob Protect',
-// 			avatar_url: 'https://cdn.discordapp.com/attachments/1037346625057730560/1170454606350921768/image.png?ex=655919cc&is=6546a4cc&hm=c39087f2d720d8d570a02554fcfcc5d77e65695d460c9ec7c3fe2c4088f75c45&',
-// 		},
-// 	});
-// }
+mongoose.connect(process.env.CONNECTION, () => {
+  console.log("connection to mongodb finished");
+});
 
 const autheds = {
   ['83.251.50.65']: true,
 }
+
+//   Customer.find({ server_customer: id }, function (err, obj) {
 
 app.get('/ss', async (req, res) => {
   const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
