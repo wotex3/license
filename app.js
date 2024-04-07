@@ -10,9 +10,9 @@ app.use(cors())
 
 
 
-mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.net/', () => {
-  console.log("connection to mongodb finished");
-});
+// mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.net/', () => {
+//   console.log("connection to mongodb finished");
+// });
 
 const apiKeys = {
   ['DWAZqDyR0F8SzdcBlti2']: true,
