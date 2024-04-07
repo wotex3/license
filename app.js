@@ -19,14 +19,7 @@ const apiKeys = {
 }
 
 app.get('/test', async (req, res) => {
-  const newCustomer = new Customer({
-    ip: '83.251.50.65',
-    userNote: 'user note',
-  });
-  newCustomer
-    .save()
-    .then(() => res.send("ok"))
-    .catch((err) => res.send(err + " Mongoose Error"));
+  res.send('ASDASDAS')
 })
 
 //   Customer.find({ server_customer: id }, function (err, obj) {
