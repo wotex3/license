@@ -126,16 +126,17 @@ function obfuscateStr(str) {
 // });
 
 const apiKeys = {
-  ['DWAZqDyR0F8SzdcBlti2']: 'DWAZqDyR0F8SzdcBlti2',
+  ['DWAZqDyR0F8SzdcBlti2']: true,
 }
 
 //   Customer.find({ server_customer: id }, function (err, obj) {
 app.get('/api_key', async (req, res) => {
   const api_key = req.query.apiKey
-  res.json({
-    isAllowed: apiKeys[api_key],
-    api_key: api_key,
-  })
+  if (!apiKeys[api_key]) {
+    res.send(false)
+  } else {
+    res.send('true')
+  }
 })
 
 app.get('/ss', async (req, res) => {
