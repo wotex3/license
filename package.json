@@ -24,6 +24,7 @@
     "generate-api-key": "^1.0.2",
     "mongoose": "^6.12.7",
     "mysql": "^2.18.1",
+    "nodemon": "^3.1.0",
     "path": "^0.12.7"
   }
 }
