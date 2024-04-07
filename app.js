@@ -5,16 +5,18 @@ const mongoose = require("mongoose");
 const Customer = require("./models/newCustomer.js");
 const path = require('path');
 
+const PORT = 4000
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  // res.render('index');
-  Customer.find({}, function (err, obj) {
-    res.render('secondLayout', { data: obj });
-  })
+  res.render('index');
+  // Customer.find({}, function (err, obj) {
+  //   res.render('secondLayout', { data: obj });
+  // })
 });
 
 mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.net/', () => {
@@ -31,9 +33,8 @@ app.post('/changeIp', (req, res) => {
     { ip: ipToChange },
     { ip: newIp }
   )
-    .then(() => res.status(200).json({ message: 'IP adresi başarıyla değiştirildi!' }))
-    .catch((err) => res.status(331).send(err));
-  console.log(ipToChange, newIp)
+  .then(() => res.status(200).json({ message: 'IP adresi başarıyla değiştirildi!' }))
+  .catch((err) => res.status(331).send(err));
 });
 
 app.post('/changeNote', (req, res) => {
@@ -43,8 +44,8 @@ app.post('/changeNote', (req, res) => {
     { ip: ip },
     { user_note: newNote }
   )
-    .then(() => res.status(200).json({ message: 'Kullanıcı notu başarıyla değiştirildi!' }))
-    .catch((err) => res.status(331).send(err));
+  .then(() => res.status(200).json({ message: 'Kullanıcı notu başarıyla değiştirildi!' }))
+  .catch((err) => res.status(331).send(err));
 });
 
 app.post('/createLicense', (req, res) => {
@@ -55,9 +56,9 @@ app.post('/createLicense', (req, res) => {
     user_note: note,
   });
   newCustomer
-    .save()
-    .then(() => res.status(200).json({ message: 'Created successfully a license!' }))
-    .catch((err) => res.status(331).send(err));
+  .save()
+  .then(() => res.status(200).json({ message: 'Created successfully a license!' }))
+  .catch((err) => res.status(331).send(err));
 });
 
 app.post('/removeLicense', (req, res) => {
@@ -66,25 +67,25 @@ app.post('/removeLicense', (req, res) => {
   Customer.findOneAndDelete(
     { ip: ip },
   )
-    .then(() => {
-      Customer.find({}, function (err, obj) {
-        res.status(200).json({ message: 'Başarıyla lisans silindi!', lengthy: obj.length })
-      })
-    
+  .then(() => {
+    Customer.find({}, function (err, obj) {
+      res.status(200).json({ message: 'Başarıyla lisans silindi!', lengthy: obj.length })
     })
-    .catch((err) => res.status(331).send(err));
+  
+  })
+  .catch((err) => res.status(331).send(err));
 });
 
 app.post('/submit', (req, res) => {
-    const userInput = req.body.inputValue;
-    if (apiKeys[userInput]) {
-        const randomData = generateRandomData();
-        Customer.find({}, function (err, obj) {
-            res.render('secondLayout', { data: obj });
-        })
-    } else {
-        res.redirect('/');
-    }
+  const userInput = req.body.inputValue;
+  if (apiKeys[userInput]) {
+      const randomData = generateRandomData();
+      Customer.find({}, function (err, obj) {
+          res.render('secondLayout', { data: obj });
+      })
+  } else {
+      res.redirect('/');
+  }
 });
 
 function generateRandomData() {
@@ -174,69 +175,57 @@ decryptionTable = {
 }
   
 function deobfuscateStr(str) {
-   var deobfuscatedStr = '';
-   var i = 0;
-   while (i < str.length) {
-     var found = false;
-     for (var key in decryptionTable) {
-       if (str.startsWith(key, i)) {
-         deobfuscatedStr += decryptionTable[key];
-         i += key.length;
-         found = true;
-         break;
-       }
-     }
-     if (!found) {
-       deobfuscatedStr += str.charAt(i);
-       i++;
-     }
-   }
-   return deobfuscatedStr;
+  var deobfuscatedStr = '';
+  var i = 0;
+  while (i < str.length) {
+    var found = false;
+    for (var key in decryptionTable) {
+      if (str.startsWith(key, i)) {
+        deobfuscatedStr += decryptionTable[key];
+        i += key.length;
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      deobfuscatedStr += str.charAt(i);
+      i++;
+    }
+  }
+  return deobfuscatedStr;
 }
   
 function obfuscateStr(str) {
-    let encrypted = "";
-    for (let char of str) {
-       if (encryptionTable[char]) {
-           encrypted += encryptionTable[char];
-       } else {
-           encrypted += char;
-       }
+  let encrypted = "";
+  for (let char of str) {
+    if (encryptionTable[char]) {
+      encrypted += encryptionTable[char];
+    } else {
+      encrypted += char;
     }
-    return encrypted;
+  }
+  return encrypted;
 }
- 
- // const mongoose = require("mongoose");
- 
- // mongoose.connect(process.env.CONNECTION, () => {
- //   console.log("connection to mongodb finished");
- // });
 
 app.get('/ss', async (req, res) => {
-   const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
-   const randomNumber = req.query.randomNumber;
- 
-   const deobfusactedRandomNumber = deobfuscateStr(randomNumber);
-   const successString = obfuscateStr('success-'+deobfusactedRandomNumber)
-   //  sendwebhook();
-    //  Customer.find({ userHwid: deobfuscatedHwid, userMcAdress: deobfuscatedmcAdress }, function (err, customers) {
-   //   if (err) {
-   //     console.error("Veritabanı hatası:", err);
-   //     return res.status(500).send("Veritabanı hatası oluştu");
-   //   }
-   if (autheds[userip]) {
-     res.send(successString)
-   } else {
-     res.send('error occuptured')
-   }
-   
-//    if (customers.length === 0) {
-//      res.send('stopit');
-//    } else {
-//      res.send(obfuscateStr(deobfuscatedHwid)+successString)
-//    }
+  const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
+  const randomNumber = req.query.randomNumber;
+  const deobfusactedRandomNumber = deobfuscateStr(randomNumber);
+  const successString = obfuscateStr('success-'+deobfusactedRandomNumber)
+  Customer.find({ ip: userip }, function (err, customers) {
+    if (err) {
+      console.error("Veritabanı hatası:", err);
+      return res.status(500).send("Veritabanı hatası oluştu");
+    }
+    
+    if (customers.length === 0) {
+      res.send('error occuptured')
+    } else {
+      res.send(successString)
+    }
+  })
 })
 
-app.listen(4000, () => {
-    console.log('Server started on http://localhost:4000');
+app.listen(PORT, () => {
+    console.log('Server started on http://localhost:'+PORT);
 });
