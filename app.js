@@ -4,16 +4,16 @@ const axios = require('axios')
 const Customer = require("../models/newCustomer.js");
 
 const port = 5000
-const failedWebhook = 'https://discord.com/api/webhooks/1170168780203229254/c4_f7SpbS2JrV-SRmG5VuwasEYqK6bNj-8mNzcsH-J8WcCp2FLRuhyz_R_NsBpsB7nXq'
+// Middleware - HTTP isteklerini JSON formatında işle
+app.use(express.json());
 
-const rateLimit = require('express-rate-limit');
-const limiter = rateLimit({
-   windowMs: 15 * 60 * 1000, // 15 minutes
-   max: 75, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-})
-app.use(limiter)
+// CORS hatasını engellemek için gerekli başlıkları ekle
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // Herkese izin ver, güvenli olmayabilir
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 encryptionTable = {
    'a': 'GHJqdwwzX',
