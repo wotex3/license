@@ -8,18 +8,17 @@ app.use(cors())
 
 // Ana sayfa route'u
 app.get('/', (req, res) => {
-    res.render('index');
+    // res.render('index');
+    res.send('DSADSA')
 });
 
 // Form submit olduğunda kontrol ve yönlendirme
 app.post('/submit', (req, res) => {
     const userInput = req.body.inputValue;
     if (userInput === 'xxxx') {
-        // Doğrulama başarılıysa, rastgele veri oluştur ve ikinci layout'a yönlendir
         const randomData = generateRandomData();
         res.render('secondLayout', { data: randomData });
     } else {
-        // Doğrulama başarısızsa, birinci layout'a geri yönlendir
         res.redirect('/');
     }
 });
