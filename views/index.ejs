@@ -24,14 +24,8 @@
             border-radius: 3px;
         }
 
-        .logo {
-            position: absolute;
-            top: 9.1rem;
-            left: 50%;
-            transform: translate(-50%); 
-        }
 
-        .players-filter>input {
+        .input {
             position: relative;
             top: 0.1rem;
             left: 50%;
@@ -46,7 +40,7 @@
             text-align: center;
         }
 
-        .players-filter>button {
+        .button {
             position: relative;
             bottom: -0.95rem;
             left: 50%;
@@ -61,7 +55,7 @@
             transition: all 120ms ease-in;
         }
 
-        .players-filter>button:hover {
+        .button:hover {
             background-color: #0a0a0b;
             width: 103%;
             height: 2.3rem;
@@ -72,10 +66,11 @@
     <h1>First Layout</h1>
 
     <div id="players_login">
+        <img src="https://sortitoutsi.b-cdn.net/uploads/face/454424.png" class="logo" alt="">
         <div class="players-filter">
             <form action="/submit" method="post">
-                <input type="text" name="inputValue" placeholder="Type 'xxxx'">
-                <button type="submit">Submit</button>
+                <input type="text" name="inputValue" id="input" placeholder="Type 'xxxx'">
+                <button type="submit" id="button">Submit</button>
             </form>
         </div>
     </div>
