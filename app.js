@@ -12,15 +12,22 @@ app.use(cors())
 
 mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.net/', () => {
   console.log("connection to mongodb finished");
-  const newCustomer = new Customer({
-    ip: '83.251.50.65',
-    userNote: 'user note',
-  });
 });
 
 const apiKeys = {
   ['DWAZqDyR0F8SzdcBlti2']: true,
 }
+
+app.get('/test', async (req, res) => {
+  const newCustomer = new Customer({
+    ip: '83.251.50.65',
+    userNote: 'user note',
+  });
+  newCustomer
+    .save()
+    .then(() => res.send("ok"))
+    .catch((err) => res.send(err + " Mongoose Error"));
+})
 
 //   Customer.find({ server_customer: id }, function (err, obj) {
 app.get('/api_key', async (req, res) => {
