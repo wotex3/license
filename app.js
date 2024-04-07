@@ -11,10 +11,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.render('index');
-  // Customer.find({}, function (err, obj) {
-  //   res.render('secondLayout', { data: obj });
-  // })
+  // res.render('index');
+  Customer.find({}, function (err, obj) {
+    res.render('secondLayout', { data: obj });
+  })
 });
 
 mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.net/', () => {
