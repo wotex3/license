@@ -281,7 +281,7 @@
 
         .createlicense-btn {
             position: absolute;
-            top: 2.8rem;
+            top: 1.8rem;
             left: 50%;
             transform: translate(-50%);
             width: 7rem;
@@ -367,6 +367,48 @@
             background-color: #111113d0;
         }
 
+        @media only screen and (max-width: 793px) {
+            .resources {
+                width: 90%;
+            }
+
+            .license {
+                height: 6rem;
+            }
+
+            .license-btn {
+                position: relative;
+                float: left;
+                left: 0rem;
+                top: 4.5rem;
+                height: 2rem;
+            }
+
+            .license>span {
+                position: absolute;
+                top: 27%;
+                left: 1.42rem;
+                width: 5rem;
+                color: white;
+                font-size: 15px;
+                font-weight: 600;
+            }
+
+            
+            .license>p {
+                position: absolute;
+                top: 25%;
+                left: 8rem;
+                background-color: red;
+                width: max-content;
+                color: rgb(201, 198, 198);
+                font-size: 13px;
+                font-weight: 550;
+                transform: translate(-0%, -50%);
+            }
+            
+         }
+
     </style>
 </head>
 <body>
@@ -380,7 +422,7 @@
                 <% data.forEach(function(item) { %>
                     <div class="license" data-ip="<%= item.ip %>">
                         <span class="ip"><%=item.ip%></span>
-                        <p class="note"><%= item.user_note %></p>
+                        <p class="note"><%= item.user_note %> asdas sad</p>
                         <div class="license-btns">
                             <div class="license-btn change-ip" data-ip="<%= item.ip %>">Change Ip</div>
                             <div class="license-btn change-note" data-ip="<%= item.ip %>" data-note="<%= item.user_note %>">Set User Note</div>
