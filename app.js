@@ -1,22 +1,13 @@
 const express = require('express');
 const app = express()
-// const axios = require('axios')
 const cors = require('cors');
-const Customer = require("../models/newCustomer.js");
+// const Customer = require("../models/newCustomer.js");
 
 const port = 5000
-// Middleware - HTTP isteklerini JSON formatında işle
 app.use(express.json());
 
 app.use(cors())
 
-// CORS hatasını engellemek için gerekli başlıkları ekle
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*'); // Herkese izin ver, güvenli olmayabilir
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
 
 encryptionTable = {
    'a': 'GHJqdwwzX',
@@ -136,7 +127,7 @@ function obfuscateStr(str) {
 // });
 
 const apiKeys = {
-  ['DWAZqDyR0F8SzdcBlti2']: true,
+  ['DWAZqDyR0F8SzdcBlti2']: 'DWAZqDyR0F8SzdcBlti2',
 }
 
 //   Customer.find({ server_customer: id }, function (err, obj) {
