@@ -2,7 +2,7 @@ const express = require('express');
 const app = express()
 const cors = require('cors');
 const mongoose = require("mongoose");
-// const Customer = require("../models/newCustomer.js");
+const Customer = require("./models/newCustomer.js");
 
 const port = 5000
 app.use(express.json());
