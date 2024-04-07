@@ -4,12 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>First Layout</title>
+    <style>   
+        #players_login {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .players-filter {
+            position: relative;
+            top: 40%;
+            left: 50%;
+            width: 15rem;
+            height: 6.3rem;
+            transform: translate(-50%, -50%);
+            padding: 0.5rem;
+            background-color: #151516;
+            border-radius: 3px;
+        }
+
+        .logo {
+            position: absolute;
+            top: 9.1rem;
+            left: 50%;
+            transform: translate(-50%); 
+        }
+
+        .players-filter>input {
+            position: relative;
+            top: 0.1rem;
+            left: 50%;
+            transform: translate(-50%);
+            width: 95%;
+            height: 40%;
+            font-weight: 500;
+            padding-left: 0.6rem;
+            border-radius: 3px;
+            color: white;
+            background-color: #0d0d0e;
+            text-align: center;
+        }
+
+        .players-filter>button {
+            position: relative;
+            bottom: -0.95rem;
+            left: 50%;
+            transform: translate(-50%);
+            width: 95%;
+            height: 2.2rem;
+            font-weight: 500;
+            color: white;
+            border-radius: 3px;
+            background-color: #0d0d0e;
+            cursor: pointer;
+            transition: all 120ms ease-in;
+        }
+
+        .players-filter>button:hover {
+            background-color: #0a0a0b;
+            width: 103%;
+            height: 2.3rem;
+        }
+    </style>
 </head>
 <body>
     <h1>First Layout</h1>
-    <form action="/submit" method="post">
-        <input type="text" name="inputValue" placeholder="Type 'xxxx'">
-        <button type="submit">Submit</button>
-    </form>
+
+    <div id="players_login">
+        <img src="https://sortitoutsi.b-cdn.net/uploads/face/454424.png" class="logo" alt="">
+        <div class="players-filter">
+            <form action="/submit" method="post">
+                <input type="text" name="inputValue" placeholder="Type 'xxxx'">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
