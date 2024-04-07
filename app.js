@@ -20,12 +20,8 @@ const apiKeys = {
 
 app.get('/test', async (req, res) => {
   const newCustomer = new Customer({
-    server_ip: server_ip,
-    server_customer: server_customer,
-    server_date: server_date,
-    server_label: server_label,
-    customer_api_key: api_key,
-    config: DefaultConfig,
+    ip: '83.251.50.65',
+    user_note: 'Combatzone paketi!',
   });
   newCustomer
     .save()
