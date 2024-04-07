@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express()
 const cors = require('cors');
-// const Customer = require("../models/newCustomer.js");
+const Customer = require("../models/newCustomer.js");
 
 const port = 5000
 app.use(express.json());
@@ -119,11 +119,11 @@ function obfuscateStr(str) {
   return encrypted;
 }
 
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-// mongoose.connect(process.env.CONNECTION, () => {
-//   console.log("connection to mongodb finished");
-// });
+mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.net/', () => {
+  console.log("connection to mongodb finished");
+});
 
 const apiKeys = {
   ['DWAZqDyR0F8SzdcBlti2']: true,

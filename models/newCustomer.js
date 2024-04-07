@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const memberSchema = mongoose.Schema({
-  api_key: {
+  ip: {
     type: String,
     required: true,
   },
-  user: {
+  userNote: {
     type: String,
     required: true,
   },
