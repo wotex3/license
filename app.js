@@ -57,7 +57,7 @@ app.post('/createLicense', (req, res) => {
   });
   newCustomer
     .save()
-    .then(() => res.send("Created successfully a license!"))
+    .then(() => res.status(200).json({ message: 'Created successfully a license!' }))
     .catch((err) => res.status(331).send(err));
 });
 
