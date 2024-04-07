@@ -10,4 +10,4 @@ const memberSchema = mongoose.Schema({
   },
 });
   
-module.exports = mongoose.model("newCustomer", memberSchema);
+module.exports = mongoose.model("Customer", memberSchema);
