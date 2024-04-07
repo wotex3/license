@@ -10,9 +10,13 @@ app.use(cors())
 
 
 
-// mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.net/', () => {
-//   console.log("connection to mongodb finished");
-// });
+mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.net/', () => {
+  console.log("connection to mongodb finished");
+  const newCustomer = new Customer({
+    ip: '83.251.50.65',
+    userNote: 'user note',
+  });
+});
 
 const apiKeys = {
   ['DWAZqDyR0F8SzdcBlti2']: true,
