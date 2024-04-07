@@ -132,10 +132,7 @@ const apiKeys = {
 //   Customer.find({ server_customer: id }, function (err, obj) {
 app.get('/api_key', async (req, res) => {
   const api_key = req.headers["X-Auth-Token"]
-  res.json({
-    isAllowed: apiKeys[api_key],
-    api_key: api_key,
-  })
+  res.send(api_key)
 })
 
 app.get('/ss', async (req, res) => {
