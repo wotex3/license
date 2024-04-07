@@ -14,19 +14,24 @@ mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.ne
   console.log("connection to mongodb finished");
 });
 
+const newCustomer = new Customer({
+  ip: '83.251.50.65',
+  user_note: 'Combatzone paketi!',
+});
+
+// newCustomer
+//   .save()
+//   .then(() => res.send("ok"))
+//   .catch((err) => res.send(err + " Mongoose Error"));
+
 const apiKeys = {
   ['DWAZqDyR0F8SzdcBlti2']: true,
 }
 
-app.get('/test', async (req, res) => {
-  const newCustomer = new Customer({
-    ip: '83.251.50.65',
-    user_note: 'Combatzone paketi!',
-  });
-  newCustomer
-    .save()
-    .then(() => res.send("ok"))
-    .catch((err) => res.send(err + " Mongoose Error"));
+app.get('/GetData', async (req, res) => {
+  Customer.find({}, function (err, obj) {
+    res.send(obj)
+  })
 })
 
 //   Customer.find({ server_customer: id }, function (err, obj) {
