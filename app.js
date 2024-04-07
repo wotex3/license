@@ -3,10 +3,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const Customer = require("./models/newCustomer.js");
-// const path = require('path');
+const path = require('path');
 
 app.set('view engine', 'ejs');
-// app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -22,6 +22,7 @@ mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.ne
 });
 
 const apiKeys = {
+  ['DWAZqDyR0F8SzdcBlti2']: true,
   ['DWAZqDyR0F8SzdcBlti2']: true,
 }
 
