@@ -38,7 +38,7 @@
         }
 
         body {
-            background-color: #24222e;
+            background: radial-gradient(ellipse at bottom, #24222e 0%, #0c0d13 100%);
         }
 
         .managament {
@@ -241,7 +241,7 @@
         /* Modal içeriği */
         .modal2-content {
             position: relative;
-            background-color: #0b0b0c;
+            background-color: #25222e;
             margin: 15% auto; /* Dikey ve yatay konumu ayarlayın */
             padding: 20px;
             height: 100px;
@@ -253,15 +253,15 @@
         #newNoteInput {
             position: relative;
             top: -0.2rem;
-            left: 1rem;
-            background-color: #0b0b0c;
+            left: 2rem;
+            background-color: #26222e;
+            border-radius: 3px;
             border: 1px solid #88888852;
             color: white; 
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-            width: 10rem;
+            width: 8rem;
             height: 1.5rem;
             text-align: center;
-            padding: 0.5rem;
         }
 
         #newNoteSubmit {
@@ -269,7 +269,8 @@
             bottom: -1.2rem;
             left: 3rem;
             font-size: 11px;
-            background-color: #0b0b0c;
+            background-color: #427df7;
+            border-radius: 3px;
             border: 1px solid #88888852;
             color: white; 
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
@@ -320,10 +321,10 @@
         /* Modal içeriği */
         .modal3-content {
             position: relative;
-            background-color: #0b0b0c;
+            background-color: #25222e;
             margin: 15% auto; /* Dikey ve yatay konumu ayarlayın */
             padding: 20px;
-            height: 150px;
+            height: 155px;
             border: 1px solid #88888852;
             width: 240px; /* Modalın genişliğini ayarlayın */
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
@@ -332,37 +333,40 @@
         #modalIp {
             position: relative;
             top: -0.2rem;
-            left: 1rem;
-            background-color: #0b0b0c;
+            left: 50%;
+            transform: translate(-50%);
+            background-color: #26222e;
+            border-radius: 3px;
             border: 1px solid #88888852;
             color: white; 
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-            width: 10rem;
+            width: 8rem;
             height: 1.5rem;
             text-align: center;
-            padding: 0.5rem;
         }
 
         #modalNote {
             position: relative;
             top: 1.2rem;
-            left: 1rem;
-            background-color: #0b0b0c;
+            left: 50%;
+            transform: translate(-50%);
+            background-color: #26222e;
+            border-radius: 3px;
             border: 1px solid #88888852;
             color: white; 
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-            width: 10rem;
+            width: 11rem;
             height: 1.5rem;
             text-align: center;
-            padding: 0.5rem;
         }
 
         #modalSubmit {
             position: relative;
-            bottom: -2.7rem;
+            bottom: -2.6rem;
             left: 3rem;
             font-size: 11px;
-            background-color: #0b0b0c;
+            background-color: #427df7;
+            border-radius: 3px;
             border: 1px solid #88888852;
             color: white; 
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
@@ -372,7 +376,7 @@
         }
 
         #modalSubmit:hover {
-            background-color: #111113d0;
+            background-color: #427ef79d;
         }
 
         @media only screen and (max-width: 793px) {
@@ -537,6 +541,8 @@
 
             $('.close').click(function() {
                 $('#myModal').css('display', 'none');
+                $('#myModal2').css('display', 'none');
+                $('#myModal3').css('display', 'none');
             });
 
             $('#newIpSubmit').click(function(event) {
