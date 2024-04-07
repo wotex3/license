@@ -8,7 +8,6 @@ app.use(express.json());
 
 app.use(cors())
 
-
 encryptionTable = {
    'a': 'GHJqdwwzX',
    'b': 'JHqwsxDdd',
