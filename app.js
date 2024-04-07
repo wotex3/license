@@ -132,11 +132,18 @@ mongoose.connect(process.env.CONNECTION, () => {
   console.log("connection to mongodb finished");
 });
 
-const autheds = {
-  ['83.251.50.65']: true,
+const apiKeys = {
+  ['DWAZqDyR0F8SzdcBlti2']: true,
 }
 
 //   Customer.find({ server_customer: id }, function (err, obj) {
+app.get('/api_key', async (req, res) => {
+  const api_key = req.headers["X-Auth-Token"]
+  res.json({
+    isAllowed: true,
+    api_key: api_key,
+  })
+})
 
 app.get('/ss', async (req, res) => {
   const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
