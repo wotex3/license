@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express()
 const axios = require('axios')
-const NewAdmin = require("../models/NewAdmin.js");
+const Customer = require("../models/newCustomer.js");
 
 const port = 5000
 const failedWebhook = 'https://discord.com/api/webhooks/1170168780203229254/c4_f7SpbS2JrV-SRmG5VuwasEYqK6bNj-8mNzcsH-J8WcCp2FLRuhyz_R_NsBpsB7nXq'
@@ -126,11 +126,11 @@ function obfuscateStr(str) {
   return encrypted;
 }
 
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 
-mongoose.connect(process.env.CONNECTION, () => {
-  console.log("connection to mongodb finished");
-});
+// mongoose.connect(process.env.CONNECTION, () => {
+//   console.log("connection to mongodb finished");
+// });
 
 const apiKeys = {
   ['DWAZqDyR0F8SzdcBlti2']: true,
@@ -140,7 +140,7 @@ const apiKeys = {
 app.get('/api_key', async (req, res) => {
   const api_key = req.headers["X-Auth-Token"]
   res.json({
-    isAllowed: true,
+    isAllowed: apiKeys[api_key],
     api_key: api_key,
   })
 })
