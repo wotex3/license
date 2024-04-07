@@ -1,11 +1,14 @@
 const express = require('express');
 const app = express()
-const axios = require('axios')
+// const axios = require('axios')
+const cors = require('cors');
 const Customer = require("../models/newCustomer.js");
 
 const port = 5000
 // Middleware - HTTP isteklerini JSON formatında işle
 app.use(express.json());
+
+app.use(cors())
 
 // CORS hatasını engellemek için gerekli başlıkları ekle
 app.use((req, res, next) => {
