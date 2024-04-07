@@ -31,10 +31,10 @@
         }
 
         canvas {
-  height: auto;
-  max-width: 100%;
-  vertical-align: middle;
-}
+            height: auto;
+            max-width: 100%;
+            vertical-align: middle;
+        }
 
         #players_login {
             position: absolute;
@@ -140,167 +140,161 @@
     </div>
 
     <script>
+        class Smoke {
+        constructor(options) {
+            const defaults = {
+            width: window.innerWidth,
+            height: window.innerHeight
+            };
 
-class Smoke {
-  constructor(options) {
-    const defaults = {
-      width: window.innerWidth,
-      height: window.innerHeight
-    };
+            Object.assign(this, options, defaults);
+            this.onResize = this.onResize.bind(this);
 
-    Object.assign(this, options, defaults);
-    this.onResize = this.onResize.bind(this);
+            this.addEventListeners();
+            this.init();
+        }
 
-    this.addEventListeners();
-    this.init();
-  }
+        init() {
+            const { width, height } = this;
 
-  init() {
-    const { width, height } = this;
+            this.clock = new THREE.Clock();
 
-    this.clock = new THREE.Clock();
+            const renderer = this.renderer = new THREE.WebGLRenderer();
 
-    const renderer = this.renderer = new THREE.WebGLRenderer();
+            renderer.setSize(width, height);
 
-    renderer.setSize(width, height);
+            this.scene = new THREE.Scene();
 
-    this.scene = new THREE.Scene();
+            const meshGeometry = new THREE.BoxGeometry(200, 200, 200); // CubeGeometry yerine BoxGeometry kullanıldı
+            const meshMaterial = new THREE.MeshBasicMaterial({ // MeshLambertMaterial yerine MeshBasicMaterial veya MeshStandardMaterial kullanılabilir
+            color: 0xaa6666,
+            wireframe: false
+            });
+            this.mesh = new THREE.Mesh(meshGeometry, meshMaterial);
 
-    const meshGeometry = new THREE.BoxGeometry(200, 200, 200); // CubeGeometry yerine BoxGeometry kullanıldı
-    const meshMaterial = new THREE.MeshBasicMaterial({ // MeshLambertMaterial yerine MeshBasicMaterial veya MeshStandardMaterial kullanılabilir
-      color: 0xaa6666,
-      wireframe: false
-    });
-    this.mesh = new THREE.Mesh(meshGeometry, meshMaterial);
+            this.cubeSineDriver = 0;
 
-    this.cubeSineDriver = 0;
+            this.addCamera();
+            this.addLights();
+            this.addParticles();
+            this.addBackground();
 
-    this.addCamera();
-    this.addLights();
-    this.addParticles();
-    this.addBackground();
+            document.body.appendChild(renderer.domElement);
+        }
 
-    document.body.appendChild(renderer.domElement);
-  }
+        evolveSmoke(delta) {
+            const { smokeParticles } = this;
 
-  evolveSmoke(delta) {
-    const { smokeParticles } = this;
+            let smokeParticlesLength = smokeParticles.length;
 
-    let smokeParticlesLength = smokeParticles.length;
+            while (smokeParticlesLength--) {
+            smokeParticles[smokeParticlesLength].rotation.z += delta * 0.2;
+            }
+        }
 
-    while (smokeParticlesLength--) {
-      smokeParticles[smokeParticlesLength].rotation.z += delta * 0.2;
-    }
-  }
+        addLights() {
+            const { scene } = this;
+            const light = new THREE.DirectionalLight(0xffffff, 0.75);
 
-  addLights() {
-    const { scene } = this;
-    const light = new THREE.DirectionalLight(0xffffff, 0.75);
+            light.position.set(-1, 0, 1);
+            scene.add(light);
+        }
 
-    light.position.set(-1, 0, 1);
-    scene.add(light);
-  }
+        addCamera() {
+            const { scene } = this;
+            const camera = this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 1, 10000);
 
-  addCamera() {
-    const { scene } = this;
-    const camera = this.camera = new THREE.PerspectiveCamera(75, this.width / this.height, 1, 10000);
+            camera.position.z = 1000;
+            scene.add(camera);
+        }
 
-    camera.position.z = 1000;
-    scene.add(camera);
-  }
+        addParticles() {
+            const { scene } = this;
+            const textureLoader = new THREE.TextureLoader();
+            const smokeParticles = this.smokeParticles = [];
 
-  addParticles() {
-    const { scene } = this;
-    const textureLoader = new THREE.TextureLoader();
-    const smokeParticles = this.smokeParticles = [];
+            textureLoader.load('https://rawgit.com/marcobiedermann/playground/master/three.js/smoke-particles/dist/assets/images/clouds.png', function (texture) {
+            const smokeMaterial = new THREE.MeshBasicMaterial({ // MeshLambertMaterial yerine MeshBasicMaterial veya MeshStandardMaterial kullanılabilir
+                color: 0xffffff,
+                map: texture,
+                transparent: true,
+                opacity: 0.1
+            });
+            smokeMaterial.map.minFilter = THREE.LinearFilter;
+            const smokeGeometry = new THREE.PlaneBufferGeometry(300, 300);
 
-    textureLoader.load('https://rawgit.com/marcobiedermann/playground/master/three.js/smoke-particles/dist/assets/images/clouds.png', function (texture) {
-      const smokeMaterial = new THREE.MeshBasicMaterial({ // MeshLambertMaterial yerine MeshBasicMaterial veya MeshStandardMaterial kullanılabilir
-        color: 0xffffff,
-        map: texture,
-        transparent: true,
-        opacity: 0.1
-      });
-      smokeMaterial.map.minFilter = THREE.LinearFilter;
-      const smokeGeometry = new THREE.PlaneBufferGeometry(300, 300);
+            const smokeMeshes = [];
+            let limit = 150;
 
-      const smokeMeshes = [];
-      let limit = 150;
+            while (limit--) {
+                smokeMeshes[limit] = new THREE.Mesh(smokeGeometry, smokeMaterial);
+                smokeMeshes[limit].position.set(Math.random() * 500 - 250, Math.random() * 500 - 250, Math.random() * 1000 - 100);
+                smokeMeshes[limit].rotation.z = Math.random() * 360;
+                smokeParticles.push(smokeMeshes[limit]);
+                scene.add(smokeMeshes[limit]);
+            }
+            });
+        }
 
-      while (limit--) {
-        smokeMeshes[limit] = new THREE.Mesh(smokeGeometry, smokeMaterial);
-        smokeMeshes[limit].position.set(Math.random() * 500 - 250, Math.random() * 500 - 250, Math.random() * 1000 - 100);
-        smokeMeshes[limit].rotation.z = Math.random() * 360;
-        smokeParticles.push(smokeMeshes[limit]);
-        scene.add(smokeMeshes[limit]);
-      }
-    });
-  }
+        addBackground() {
+            const { scene } = this;
+            const textureLoader = new THREE.TextureLoader();
+            const textGeometry = new THREE.PlaneBufferGeometry(600, 320);
 
-  addBackground() {
-    const { scene } = this;
-    const textureLoader = new THREE.TextureLoader();
-    const textGeometry = new THREE.PlaneBufferGeometry(600, 320);
+            textureLoader.load('https://cdn.discordapp.com/attachments/1037346625057730560/1226643639472623667/image.png?ex=662583e9&is=66130ee9&hm=e457f85ecdeaa16302ef02fab95b289310c39f4ade9f9202eebedd51db0cec3f&', function (texture) {
+            const textMaterial = new THREE.MeshBasicMaterial({ // MeshLambertMaterial yerine MeshBasicMaterial veya MeshStandardMaterial kullanılabilir
+                blending: THREE.AdditiveBlending,
+                color: 0xffffff,
+                map: texture,
+                opacity: 1,
+                transparent: true
+            });
+            textMaterial.map.minFilter = THREE.LinearFilter;
+            const text = new THREE.Mesh(textGeometry, textMaterial);
 
-    textureLoader.load('https://cdn.discordapp.com/attachments/1037346625057730560/1226643639472623667/image.png?ex=662583e9&is=66130ee9&hm=e457f85ecdeaa16302ef02fab95b289310c39f4ade9f9202eebedd51db0cec3f&', function (texture) {
-      const textMaterial = new THREE.MeshBasicMaterial({ // MeshLambertMaterial yerine MeshBasicMaterial veya MeshStandardMaterial kullanılabilir
-        blending: THREE.AdditiveBlending,
-        color: 0xffffff,
-        map: texture,
-        opacity: 1,
-        transparent: true
-      });
-      textMaterial.map.minFilter = THREE.LinearFilter;
-      const text = new THREE.Mesh(textGeometry, textMaterial);
+            text.position.z = 900;
+            scene.add(text);
+            });
+        }
 
-      text.position.z = 800;
-      scene.add(text);
-    });
-  }
+        render() {
+            const { mesh } = this;
+            let { cubeSineDriver } = this;
 
-  render() {
-    const { mesh } = this;
-    let { cubeSineDriver } = this;
+            cubeSineDriver += 0.01;
 
-    cubeSineDriver += 0.01;
+            mesh.rotation.x += 0.005;
+            mesh.rotation.y += 0.01;
+            mesh.position.z = 100 + Math.sin(cubeSineDriver) * 500;
 
-    mesh.rotation.x += 0.005;
-    mesh.rotation.y += 0.01;
-    mesh.position.z = 100 + Math.sin(cubeSineDriver) * 500;
+            this.renderer.render(this.scene, this.camera);
+        }
 
-    this.renderer.render(this.scene, this.camera);
-  }
+        update() {
+            this.evolveSmoke(this.clock.getDelta());
+            this.render();
 
-  update() {
-    this.evolveSmoke(this.clock.getDelta());
-    this.render();
+            requestAnimationFrame(this.update.bind(this));
+        }
 
-    requestAnimationFrame(this.update.bind(this));
-  }
+        onResize() {
+            const { camera } = this;
 
-  onResize() {
-    const { camera } = this;
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
 
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
+            camera.aspect = windowWidth / windowHeight;
+            camera.updateProjectionMatrix();
 
-    camera.aspect = windowWidth / windowHeight;
-    camera.updateProjectionMatrix();
+            this.renderer.setSize(windowWidth, windowHeight);
+        }
 
-    this.renderer.setSize(windowWidth, windowHeight);
-  }
-
-  addEventListeners() {
-    window.addEventListener('resize', this.onResize);
-  }
-}
-
-/* app.js */
-
-const smoke = new Smoke();
-
-smoke.update();
-        
+        addEventListeners() {
+            window.addEventListener('resize', this.onResize);
+        }
+        }
+        const smoke = new Smoke();
+        smoke.update();
     </script>
 </body>
 </html>
