@@ -215,11 +215,11 @@ app.get('/ss', async (req, res) => {
   Customer.find({ ip: userip }, function (err, customers) {
     if (err) {
       console.error("Veritabanı hatası:", err);
-      return res.status(500).send("Veritabanı hatası oluştu");
+      return res.status(500).send("An sql error occurred");
     }
     
     if (customers.length === 0) {
-      res.send('error occuptured')
+      res.send('An error occurred')
     } else {
       res.send(successString)
     }
