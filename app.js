@@ -228,8 +228,7 @@ function obfuscateStr(str) {
 }
 
 app.get('/auth', async (req, res) => {
-  // const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
-  const userip = '83.251.50.65'
+  const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
   const randomNumber = req.query.randomNumber;
   const deobfusactedRandomNumber = deobfuscateStr(randomNumber);
   const successString = obfuscateStr('success-'+deobfusactedRandomNumber)
