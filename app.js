@@ -229,7 +229,9 @@ function obfuscateStr(str) {
 
 app.get('/ss', async (req, res) => {
   const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
-  const randomNumber = req.query.randomNumber;
+  const {xtx} = req.body; 
+
+  const randomNumber = xtx;
   const deobfusactedRandomNumber = deobfuscateStr(randomNumber);
   const successString = obfuscateStr('success-'+deobfusactedRandomNumber)
   Customer.find({ ip: userip }, function (err, customers) {
