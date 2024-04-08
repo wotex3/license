@@ -53,11 +53,27 @@ app.post('/changeNote', (req, res) => {
   }).catch((err) => res.status(331).send(err));
 });
 
+app.post('/changeDate', (req, res) => {
+  const { ip, date } = req.body;
+  console.log(ip, datye
+  )
+  Customer.findOneAndUpdate(
+    { ip: ip },
+    { date: date }
+  )
+  .then(() => {
+    Customer.find({}, function (err, obj) {
+      res.status(200).json({ message: 'Kullanici notu basariyla degistirildi!', data: obj })
+    })
+  }).catch((err) => res.status(331).send(err));
+});
+
 app.post('/createLicense', (req, res) => {
-  const { ip, note } = req.body;
+  const { ip, note, date } = req.body;
   const newCustomer = new Customer({
     ip: ip,
     user_note: note,
+    date: date,
   });
   newCustomer
   .save()
@@ -225,7 +241,19 @@ app.get('/ss', async (req, res) => {
     if (customers.length === 0) {
       res.send('An error occurred')
     } else {
-      res.send(successString)
+      const isExpired = customers[0].date < new Date().toISOString().split('T')[0]
+      if (isExpired == true) {
+        Customer.findOneAndDelete(
+          { ip: userip },
+        )
+        .then(() => {
+          Customer.find({}, function (err, obj) {
+            res.send('Expired')
+          })
+        }).catch((err) => res.send('333'));
+      } else {
+        res.send(successString)
+      }
     }
   })
 })

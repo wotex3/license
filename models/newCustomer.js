@@ -9,6 +9,10 @@ const memberSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  date: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Customer", memberSchema);
