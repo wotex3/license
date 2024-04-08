@@ -13,10 +13,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.render('index');
-  // Customer.find({}, function (err, obj) {
-  //   res.render('secondLayout', { data: obj });
-  // })
+  // res.render('index');
+  Customer.find({}, function (err, obj) {
+    res.render('secondLayout', { data: obj });
+  })
 });
 
 mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.net/', () => {
@@ -33,47 +33,51 @@ app.post('/changeIp', (req, res) => {
     { ip: ipToChange },
     { ip: newIp }
   )
-  .then(() => res.status(200).json({ message: 'IP adresi başarıyla değiştirildi!' }))
-  .catch((err) => res.status(331).send(err));
+  .then(() => {
+    Customer.find({}, function (err, obj) {
+      res.status(200).json({ message: 'IP adresi başarıyla değiştirildi!', data: obj })
+    })
+  }).catch((err) => res.status(331).send(err));
 });
 
 app.post('/changeNote', (req, res) => {
   const { ip, newNote } = req.body;
-  console.log(ip, newNote)
   Customer.findOneAndUpdate(
     { ip: ip },
     { user_note: newNote }
   )
-  .then(() => res.status(200).json({ message: 'Kullanıcı notu başarıyla değiştirildi!' }))
-  .catch((err) => res.status(331).send(err));
+  .then(() => {
+    Customer.find({}, function (err, obj) {
+      res.status(200).json({ message: 'Kullanici notu basariyla degistirildi!', data: obj })
+    })
+  }).catch((err) => res.status(331).send(err));
 });
 
 app.post('/createLicense', (req, res) => {
   const { ip, note } = req.body;
-  console.log(ip, note)
   const newCustomer = new Customer({
     ip: ip,
     user_note: note,
   });
   newCustomer
   .save()
-  .then(() => res.status(200).json({ message: 'Created successfully a license!' }))
-  .catch((err) => res.status(331).send(err));
+  .then(() => {
+    Customer.find({}, function (err, obj) {
+      res.status(200).json({ message: 'Lisans basariyla olusturuldu', data: obj })
+    })
+  }).catch((err) => res.status(331).send(err));
 });
 
 app.post('/removeLicense', (req, res) => {
   const { ip } = req.body;
-  console.log(ip)
   Customer.findOneAndDelete(
     { ip: ip },
   )
   .then(() => {
     Customer.find({}, function (err, obj) {
-      res.status(200).json({ message: 'Başarıyla lisans silindi!', lengthy: obj.length })
+      res.status(200).json({ message: 'Basariyla lisans silindi!', data: obj })
     })
-  
-  })
-  .catch((err) => res.status(331).send(err));
+  }).catch((err) => res.status(331).send(err));
 });
 
 app.post('/submit', (req, res) => {
@@ -81,7 +85,7 @@ app.post('/submit', (req, res) => {
   if (apiKeys[userInput]) {
       const randomData = generateRandomData();
       Customer.find({}, function (err, obj) {
-          res.render('secondLayout', { data: obj });
+        res.render('secondLayout', { data: obj });
       })
   } else {
       res.redirect('/');
