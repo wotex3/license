@@ -227,7 +227,7 @@ function obfuscateStr(str) {
   return encrypted;
 }
 
-app.get('/ss', async (req, res) => {
+app.get('/auth', async (req, res) => {
   const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
   const {xtx} = req.body; 
 
