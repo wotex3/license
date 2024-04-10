@@ -103,7 +103,7 @@
         .license>span {
             position: absolute;
             top: 29%;
-            left: 1rem;
+            left: 0.7rem;
             width: 5rem;
             color: white;
             font-size: 15px;
@@ -114,7 +114,7 @@
         .license>h5 {
             position: absolute;
             top: 71.5%;
-            left: 1rem;
+            left: 0.7rem;
             width: max-content;
             color: rgb(201, 198, 198);
             font-size: 12px;
@@ -424,15 +424,26 @@
             }
 
             .license {
-                height: 6rem;
+                height: 9rem;
+            }
+
+            .license-btns {
+                position: relative;
+                top: 1rem;
+                float: right;
+                right: 0.5rem;
+                width: 10rem;
+                z-index: 999;
+                height: 100%;
             }
 
             .license-btn {
-                position: relative;
-                float: left;
+                /* position: relative; */
+                top: 0.5rem;
                 left: 1.75rem;
-                top: 4.5rem;
-                height: 2rem;
+                float: left;
+                height: 1.5rem;
+                margin: 0.2rem;
             }
 
             .license>span {
@@ -445,13 +456,25 @@
                 font-weight: 600;
             }
 
-            
-            .license>p {
+            .license>h5 {
                 position: absolute;
-                top: 2.3rem;
+                top: 28.5%;
                 left: 0.6rem;
                 width: max-content;
                 color: rgb(201, 198, 198);
+                font-size: 14px;
+                font-weight: 600;
+                transform: translate(-0%, -50%);
+            }
+            
+            .license>p {
+                position: absolute;
+                top: 6.4rem;
+                left: 0.6rem;
+                width: max-content;
+                width: 12rem;
+                height: 4.5rem;
+                color: rgb(242, 236, 236);
                 font-size: 13px;
                 font-weight: 550;
                 transform: translate(-0%, -50%);
