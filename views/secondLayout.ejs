@@ -56,7 +56,6 @@
             height: 100%;
             display: block;
         }
-
         
         .resources {
             position: absolute;
@@ -98,6 +97,7 @@
             background-color: #25222e;
             margin-bottom: 0.5rem;
             border-radius: 3px;
+            cursor: pointer;
         }
 
         .license>span {
@@ -152,7 +152,7 @@
             width: max-content;
             height: 65%;
             margin-left: 1rem;
-            background-color: #427df7;
+            /* background-color: #427df7; */
             border-radius: 3px;
             display: flex;
             justify-content: center;
@@ -162,6 +162,7 @@
             font-size: 12px;
             font-weight: 550;
             cursor: pointer;
+            transition: all ease 100ms;
         }
 
         .license-btn>span {
@@ -170,7 +171,20 @@
         }
 
         .license-btn:hover {
-            background-color: #0b0b0c9d;
+            filter: brightness(70%);
+        }
+
+        .change-ip {
+            background-color: #4b3cd5;
+        }
+        .change-date {
+            background-color: #0a6c50;  
+        } 
+        .change-note {
+            background-color: #7d00d3;
+        }
+        .remove-license {
+            background-color: #f74242;
         }
 
         /* Modal container */
@@ -332,6 +346,7 @@
             color: white;
             border-radius: 3px;
             cursor: pointer;
+            transition: all ease 100ms;
         }
 
         .createlicense-btn>span {
@@ -341,7 +356,7 @@
         }
 
         .createlicense-btn:hover {
-            background-color: #111113c7;
+            filter: brightness(70%);
         }
 
         .modal3 {
@@ -548,10 +563,10 @@
                             <p class="note"><%= item.user_note %></p>
                             <h5 class="date"><%= item.date %></h5>
                             <div class="license-btns">
-                                <div class="license-btn change-ip" style="background-color: #4b3cd5;" data-ip="<%= item.ip %>"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="15px" width="15px" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M18 11c.7 0 1.37.1 2 .29V10c0-1.1-.9-2-2-2h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h6.26A6.995 6.995 0 0 1 18 11zM8.9 6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2H8.9V6z"></path><path d="M18 13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 2c.83 0 1.5.67 1.5 1.5S18.83 18 18 18s-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zm0 6c-1.03 0-1.94-.52-2.48-1.32.73-.42 1.57-.68 2.48-.68s1.75.26 2.48.68c-.54.8-1.45 1.32-2.48 1.32z"></path></svg><span>Change Ip</span></div>
-                                <div class="license-btn change-date" style="background-color: #0a6c50;" data-ip="<%= item.ip %>" data-note="<%= item.date %>"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="15px" width="15px" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"></path></svg><span>Change Date</span></div>
-                                <div class="license-btn change-note" style="background-color: #7d00d3;" data-ip="<%= item.ip %>" data-note="<%= item.user_note %>"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="15px" width="15px" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7-.25c.41 0 .75.34.75.75s-.34.75-.75.75-.75-.34-.75-.75.34-.75.75-.75zM9.1 17H7v-2.14l5.96-5.96 2.12 2.12L9.1 17zm7.75-7.73-1.06 1.06-2.12-2.12 1.06-1.06c.2-.2.51-.2.71 0l1.41 1.41c.2.2.2.51 0 .71z"></path></svg><span>Set User Note</span></div>
-                                <div style="background-color: #f74242;" class="license-btn remove-license" data-ip="<%= item.ip %>"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="15px" width="15px" xmlns="http://www.w3.org/2000/svg"><path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path></svg><span>Remove License</span></div>
+                                <div class="license-btn change-ip" data-ip="<%= item.ip %>"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="15px" width="15px" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M18 11c.7 0 1.37.1 2 .29V10c0-1.1-.9-2-2-2h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h6.26A6.995 6.995 0 0 1 18 11zM8.9 6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2H8.9V6z"></path><path d="M18 13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 2c.83 0 1.5.67 1.5 1.5S18.83 18 18 18s-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zm0 6c-1.03 0-1.94-.52-2.48-1.32.73-.42 1.57-.68 2.48-.68s1.75.26 2.48.68c-.54.8-1.45 1.32-2.48 1.32z"></path></svg><span>Change Ip</span></div>
+                                <div class="license-btn change-date" data-ip="<%= item.ip %>" data-note="<%= item.date %>"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="15px" width="15px" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"></path></svg><span>Change Date</span></div>
+                                <div class="license-btn change-note" data-ip="<%= item.ip %>" data-note="<%= item.user_note %>"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="15px" width="15px" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7-.25c.41 0 .75.34.75.75s-.34.75-.75.75-.75-.34-.75-.75.34-.75.75-.75zM9.1 17H7v-2.14l5.96-5.96 2.12 2.12L9.1 17zm7.75-7.73-1.06 1.06-2.12-2.12 1.06-1.06c.2-.2.51-.2.71 0l1.41 1.41c.2.2.2.51 0 .71z"></path></svg><span>Set User Note</span></div>
+                                <div class="license-btn remove-license" data-ip="<%= item.ip %>"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="15px" width="15px" xmlns="http://www.w3.org/2000/svg"><path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path></svg><span>Remove License</span></div>
                             </div>
                         </div>
                     <% }); %>  
@@ -635,7 +650,7 @@
                         url: '/createLicense',
                         data: { ip: ip, note: note, date: date },
                         success: function(response) {
-                            updateAllTheData(response.data)
+                            UpdateData(response.data)
                             setTimeout(() => {
                                 alert(response.message)
                             }, 150);
@@ -664,7 +679,7 @@
             //         url: '/createLicense',
             //         data: { ip: ip, note: note },
             //         success: function(response) {
-            //             updateAllTheData(response.data)
+            //             UpdateData(response.data)
             //             setTimeout(() => {
             //                 alert(response.message)
             //             }, 150);
@@ -712,7 +727,7 @@
                             // $('.ip').filter(function() {
                             //     return $(this).text() === ipToChange;
                             // }).text(newIp);
-                            updateAllTheData(response.data)
+                            UpdateData(response.data)
                             setTimeout(() => {
                                 alert(response.message)
                             }, 150);
@@ -751,13 +766,13 @@
                     $.ajax({
                         type: 'POST',
                         url: '/changeDate',
-                        data: { ipToChange: ipToChange, newData: date },
+                        data: { ip: ipToChange, date: date },
                         success: function(response) {
                             // $('#myModal').css('display', 'none');
                             // $('.ip').filter(function() {
                             //     return $(this).text() === ipToChange;
                             // }).text(newIp);
-                            updateAllTheData(response.data)
+                            UpdateData(response.data)
                             setTimeout(() => {
                                 alert(response.message)
                             }, 150);
@@ -789,7 +804,7 @@
             //             // $('.ip').filter(function() {
             //             //     return $(this).text() === ipToChange;
             //             // }).text(newIp);
-            //             updateAllTheData(response.data)
+            //             UpdateData(response.data)
             //             setTimeout(() => {
             //                 alert(response.message)
             //             }, 150);
@@ -837,7 +852,7 @@
                             // $('.note').filter(function() {
                             //     return $(this).text() === noteToChange;
                             // }).text(newNote);
-                            updateAllTheData(response.data)
+                            UpdateData(response.data)
                             setTimeout(() => {
                                 alert(response.message)
                             }, 150);
@@ -863,7 +878,7 @@
             //             // $('.note').filter(function() {
             //             //     return $(this).text() === noteToChange;
             //             // }).text(newNote);
-            //             updateAllTheData(response.data)
+            //             UpdateData(response.data)
             //             setTimeout(() => {
             //                 alert(response.message)
             //             }, 150);
@@ -897,7 +912,7 @@
                         data: { ip: ip },
                         success: function(response) {
                             $(`.license[data-ip="${ip}"]`).remove()
-                            updateAllTheData(response.data)
+                            UpdateData(response.data)
                             setTimeout(() => {
                                 alert(response.message)
                             }, 150);
@@ -911,7 +926,7 @@
             });
         })
 
-        function updateAllTheData(data) {
+        function UpdateData(data) {
             if (data.length == 0) {
                 $('.not-licenseyet').remove()
                 $('.appendplace').append(`
@@ -927,10 +942,10 @@
                         <p class="note">${v.user_note}</p>
                         <h5 class="date">${v.date}</h5>
                         <div class="license-btns">
-                            <div class="license-btn change-ip" data-ip="${v.ip}">Change Ip</div>
-                            <div class="license-btn change-date" data-ip="${v.ip}" data-date="${v.date}">Change Date</div>
-                            <div class="license-btn change-note" style="background-color: #7d00d3;" data-ip="${v.ip}" data-note="${v.user_note}">Set User Note</div>
-                            <div style="background-color: #f74242;" class="license-btn remove-license" data-ip="${v.ip}">Remove License</div>
+                            <div class="license-btn change-ip" data-ip="${v.ip}"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="15px" width="15px" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M18 11c.7 0 1.37.1 2 .29V10c0-1.1-.9-2-2-2h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h6.26A6.995 6.995 0 0 1 18 11zM8.9 6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2H8.9V6z"></path><path d="M18 13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 2c.83 0 1.5.67 1.5 1.5S18.83 18 18 18s-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zm0 6c-1.03 0-1.94-.52-2.48-1.32.73-.42 1.57-.68 2.48-.68s1.75.26 2.48.68c-.54.8-1.45 1.32-2.48 1.32z"></path></svg><span>Change Ip</span></div>
+                            <div class="license-btn change-date" data-ip="${v.ip}" data-note="${v.user_note}"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="15px" width="15px" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"></path></svg><span>Change Date</span></div>
+                            <div class="license-btn change-note" data-ip="${v.ip}" data-note="${v.user_note}"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="15px" width="15px" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7-.25c.41 0 .75.34.75.75s-.34.75-.75.75-.75-.34-.75-.75.34-.75.75-.75zM9.1 17H7v-2.14l5.96-5.96 2.12 2.12L9.1 17zm7.75-7.73-1.06 1.06-2.12-2.12 1.06-1.06c.2-.2.51-.2.71 0l1.41 1.41c.2.2.2.51 0 .71z"></path></svg><span>Set User Note</span></div>
+                            <div class="license-btn remove-license" data-ip="${v.ip}"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="15px" width="15px" xmlns="http://www.w3.org/2000/svg"><path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path></svg><span>Remove License</span></div>
                         </div>
                     </div>
                 `)

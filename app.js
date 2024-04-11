@@ -13,10 +13,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.render('index');
-  // Customer.find({}, function (err, obj) {
-  //   res.render('secondLayout', { data: obj });
-  // })
+  // res.render('index');
+  Customer.find({}, function (err, obj) {
+    res.render('secondLayout', { data: obj });
+  })
 });
 
 mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.net/', () => {
@@ -55,15 +55,14 @@ app.post('/changeNote', (req, res) => {
 
 app.post('/changeDate', (req, res) => {
   const { ip, date } = req.body;
-  console.log(ip, datye
-  )
+  console.log(req.body)
   Customer.findOneAndUpdate(
     { ip: ip },
     { date: date }
   )
   .then(() => {
     Customer.find({}, function (err, obj) {
-      res.status(200).json({ message: 'Kullanici notu basariyla degistirildi!', data: obj })
+      res.status(200).json({ message: 'Kullanici tarihi basariyla degistirildi!', data: obj })
     })
   }).catch((err) => res.status(331).send(err));
 });
