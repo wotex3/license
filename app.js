@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const Customer = require("./models/newCustomer.js");
 const path = require('path');
+const axios = require('axios');
 
 const PORT = 4000
 
@@ -12,20 +13,58 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  res.render('index');
-  // Customer.find({}, function (err, obj) {
-  //   res.render('secondLayout', { data: obj });
-  // })
+const apiKeys = {
+  ['DWAZqDyR0F8SzdcBlti2']: true,
+}
+
+const linksx = {
+  'https://keymaster.fivem.net/': {
+    label: 'Keymaster',
+    status: false,
+  },
+  'https://status.cfx.re/api/v2/status.json': {
+    label: 'Cfx.re Status',
+    status: false,
+  },
+};
+
+app.get('/', async (req, res) => {
+  try {
+    const obj = await Customer.find({});
+    
+    // Tüm linklerin durumunu başlangıçta false olarak ayarla
+    for (const url in linksx) {
+      linksx[url].status = false;
+    }
+    
+    // Her bir linkin durumunu kontrol et
+    for (const url in linksx) {
+      try {
+        const response = await axios.get(url);
+        if (response.status === 200) {
+          linksx[url].status = true;
+          if (url == 'https://status.cfx.re/api/v2/status.json') {
+            if (response.data.status.description != 'All Systems Operational') {
+              linksx[url].status = false;
+            }
+          }
+        } else {
+          linksx[url].status = false;
+        }
+      } catch (error) {
+        linksx[url].status = false;
+      }
+    }
+    res.render('secondLayout', { data: obj, links: linksx });
+  } catch (err) {
+    res.sender('index')
+  }
 });
+
 mongoose.set('strictQuery', true)
 mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.net/', () => {
   console.log("connection to mongodb finished");
 });
-
-const apiKeys = {
-  ['DWAZqDyR0F8SzdcBlti2']: true,
-}
 
 app.post('/changeIp', (req, res) => {
   const { ipToChange, newIp } = req.body;

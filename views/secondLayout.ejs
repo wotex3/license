@@ -208,7 +208,24 @@
             height: 4rem;
             float: left;
             margin: 1rem;
-            background-color: red;
+            background-color: #25222e;
+            border-radius: 3px;
+        }
+
+        .uptime-btn>span {
+            position: absolute;
+            top: 0.5rem;
+            left: 50%;
+            transform: translate(-50%);
+            color: red;
+        }
+
+        .uptime-btn>svg {
+            position: absolute;
+            top: 2.1rem;
+            left: 50%;
+            transform: translate(-50%);
+            color: red;
         }
 
         /* Modal container */
@@ -616,8 +633,10 @@
             // Create
 
             var data = <%- JSON.stringify(data) %>
+            var links = <%- JSON.stringify(links) %>
             UpdateData(JSON.stringify(data))
-            
+            UpdateLinksData(JSON.stringify(links))
+
             $(document).on('click', '.createlicense-btn', function (event) {
                 // $('#myModal3').css('display', 'block');
                 const { value: formValues } = Swal.fire({
@@ -964,6 +983,28 @@
                 `)
                 })
             }
+        }
+
+        function UpdateLinksData(links) {
+            data = JSON.parse(links)
+            $('.uptime').html('')
+            $.each(data, function(k, v) {
+                let icon = '';
+                let color = '';
+                if (v.status == true) {
+                    icon = '<svg stroke="#12ad7f" fill="#12ad7f" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M7,12 L11,15 L16,8"></path></svg>';
+                    color = '#12ad7f'
+                } else {
+                    icon = '<svg stroke="#F44D47" fill="#F44D47" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M7,12 L11,15 L16,8"></path></svg>';
+                    color = '#F44D47'
+                }
+                $('.uptime').append(` 
+                <div class="uptime-btn">
+                    <span style="color: ${color}">${v.label}</span>
+                    ${icon}
+                </div>
+                `)
+            })
         }
 
         class Smoke {
