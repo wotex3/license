@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const Customer = require("./models/newCustomer.js");
+
 const path = require('path');
 const axios = require('axios');
 
@@ -32,22 +33,22 @@ const cfxURL = 'https://status.cfx.re/api/v2/status.json'
 let cfxReIsActive = false;
 
 app.get('/', async (req, res) => {
-  // res.render('index')
-  const obj = await Customer.find({});
-  try {
-    cfxReIsActive = true;
-    const response = await axios.get(cfxURL);
-    if (response.status === 200) {
-      console.log(response.data.status.description)
-      if (response.data.status.description != 'All Systems Operational') {
-        cfxReIsActive = false;
-      }
-    }
-    res.render('secondLayout', { data: obj, statusCfx: cfxReIsActive }); 
-    // res.render('index')
-  } catch (err) {
-    throw err;
-  }
+  res.render('index')
+  // const obj = await Customer.find({});
+  // try {
+  //   cfxReIsActive = true;
+  //   const response = await axios.get(cfxURL);
+  //   if (response.status === 200) {
+  //     console.log(response.data.status.description)
+  //     if (response.data.status.description != 'All Systems Operational') {
+  //       cfxReIsActive = false;
+  //     }
+  //   }
+  //   res.render('secondLayout', { data: obj, statusCfx: cfxReIsActive }); 
+  //   // res.render('index')
+  // } catch (err) {
+  //   throw err;
+  // }
   // try {
   //   const obj = await Customer.find({});
   //   for (const url in linksx) {
@@ -149,15 +150,26 @@ app.post('/removeLicense', (req, res) => {
   }).catch((err) => res.status(331).send(err));
 });
 
-app.post('/submit', (req, res) => {
+app.post('/submit', async (req, res) => {
   const userInput = req.body.inputValue;
   if (apiKeys[userInput]) {
-      const randomData = generateRandomData();
-      Customer.find({}, function (err, obj) {
-        res.render('secondLayout', { data: obj });
-      })
-  } else {
-      res.redirect('/');
+      const obj = await Customer.find({});
+      try {
+        cfxReIsActive = true;
+        const response = await axios.get(cfxURL);
+        if (response.status === 200) {
+          console.log(response.data.status.description)
+          if (response.data.status.description != 'All Systems Operational') {
+            cfxReIsActive = false;
+          }
+        }
+        res.render('secondLayout', { data: obj, statusCfx: cfxReIsActive }); 
+      } catch (err) {
+        res.redirect('/');
+        throw err;
+      }
+    } else {
+    res.redirect('/');
   }
 });
 
