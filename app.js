@@ -67,6 +67,7 @@ app.get('/auth', async (req, res) => {
       res.send('Unauthorized')
     } else {
       const isExpired = customers[0].date < new Date().toISOString().split('T')[0]
+      console.log(isExpired)
       if (isExpired == true) {
         Customer.findOneAndDelete(
           { ip: userip },
