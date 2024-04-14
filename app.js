@@ -159,7 +159,7 @@ app.post('/submit', async (req, res) => {
         cfxReIsActive = true;
         const response = await axios.get(cfxURL);
         if (response.status === 200) {
-          console.log(response.data.status.description)
+          // console.log(response.data.status.description)
           if (response.data.status.description != 'All Systems Operational') {
             cfxReIsActive = false;
           }
