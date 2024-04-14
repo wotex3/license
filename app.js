@@ -12,74 +12,79 @@ const PORT = 4000
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+const rateLimit = require('express-rate-limit');
+const limiter = rateLimit({
+   windowMs: 15 * 60 * 1000, // 15 minutes
+   max: 85, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
+app.use(limiter)
+app.use(bodyParser.json());
+
+// URL kodu çözülmüş form verilerini işlemek için bodyParser kullan
 app.use(bodyParser.urlencoded({ extended: true }));
+
 
 const apiKeys = {
   ['DWAZqDyR0F8SzdcBlti2']: true,
   ['bbbb']: true,
 }
 
-// const linksx = {
-//   'https://keymaster.fivem.net/': {
-//     label: 'Keymaster',
-//     status: false,
-//   },
-//   'https://status.cfx.re/api/v2/status.json': {
-//     label: 'Cfx.re Status',
-//     status: false,
-//   },
-// };
-
 const cfxURL = 'https://status.cfx.re/api/v2/status.json'
 let cfxReIsActive = false;
-
-app.get('/', async (req, res) => {
-  res.render('index')
-  // const obj = await Customer.find({});
-  // try {
-  //   cfxReIsActive = true;
-  //   const response = await axios.get(cfxURL);
-  //   if (response.status === 200) {
-  //     if (response.data.status.description != 'All Systems Operational') {
-  //       cfxReIsActive = false;
-  //     }
-  //   }
-  //   res.render('secondLayout', { data: obj, statusCfx: cfxReIsActive }); 
-  //   // res.render('index')
-  // } catch (err) {
-  //   throw err;
-  // }
-  // try {
-  //   const obj = await Customer.find({});
-  //   for (const url in linksx) {
-  //     linksx[url].status = false;
-  //   }
-  //   for (const url in linksx) {
-  //     try {
-  //       const response = await axios.get(url);
-  //       if (response.status === 200) {
-  //         linksx[url].status = true;
-  //         if (url == 'https://status.cfx.re/api/v2/status.json') {
-  //           if (response.data.status.description != 'All Systems Operational') {
-  //             linksx[url].status = false;
-  //           }
-  //         }
-  //       } else {
-  //         linksx[url].status = false;
-  //       }
-  //     } catch (error) {
-  //       linksx[url].status = false;
-  //     }
-  //   }
-  //   res.render('secondLayout', { data: obj, links: linksx });
-  // } catch (err) {
-  //   res.sender('index')
-  // }
-});
-
 mongoose.set('strictQuery', true)
 mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.net/', () => {
   console.log("connection to mongodb finished");
+});
+
+app.get('/auth', async (req, res) => {
+  const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
+  if (req.body === undefined || req.body === null) { 
+    res.send('DUNYA GUL BANA')
+    return;          
+  }     
+  const bodyKeys = Object.keys(req.body);
+  const numElements = bodyKeys.length;
+  if (numElements != 14) {
+    res.send('YAPMA OLM YAPMA ANANI') 
+    return 
+  }
+  if (!req.body.gkbquwgs) {
+    res.send('YAPMA OLM')
+    return
+  }
+  const key = req.body.gkbquwgs;
+  const deobfusactedRandomNumber = deobfuscateStr(key);
+  const successString = obfuscateStr('success-'+key)
+  Customer.find({ ip: userip }, function (err, customers) {
+    if (err) {
+      console.error("Veritabanı hatası:", err);
+      return res.status(500).send("An sql error occurred");
+    }
+    
+    if (customers.length === 0) {
+      res.send('Unauthorized')
+    } else {
+      const isExpired = customers[0].date < new Date().toISOString().split('T')[0]
+      if (isExpired == true) {
+        Customer.findOneAndDelete(
+          { ip: userip },
+        )
+        .then(() => {
+          // Customer.find({}, function (err, obj) {
+          res.send('Expired')
+        //   })
+        }).catch((err) => res.send('333'));
+      } else {
+        res.send(successString)
+      }
+    }
+  })
+})
+
+app.get('/', async (req, res) => {
+  res.render('index')
 });
 
 app.post('/changeIp', (req, res) => {
@@ -152,6 +157,7 @@ app.post('/removeLicense', (req, res) => {
 
 app.post('/submit', async (req, res) => {
   const userInput = req.body.inputValue;
+  console.log(userInput)
   if (apiKeys[userInput]) {
       const obj = await Customer.find({});
       try {
@@ -292,37 +298,6 @@ function obfuscateStr(str) {
   return encrypted;
 }
 
-app.get('/auth', async (req, res) => {
-  const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
-  const key = req.query.key;
-  const deobfusactedRandomNumber = deobfuscateStr(key);
-  const successString = obfuscateStr('success-'+key)
-  Customer.find({ ip: userip }, function (err, customers) {
-    if (err) {
-      console.error("Veritabanı hatası:", err);
-      return res.status(500).send("An sql error occurred");
-    }
-    
-    if (customers.length === 0) {
-      res.send('An error occurred')
-    } else {
-      const isExpired = customers[0].date < new Date().toISOString().split('T')[0]
-      if (isExpired == true) {
-        Customer.findOneAndDelete(
-          { ip: userip },
-        )
-        .then(() => {
-          Customer.find({}, function (err, obj) {
-            res.send('Expired')
-          })
-        }).catch((err) => res.send('333'));
-      } else {
-        res.send(successString)
-      }
-    }
-  })
-})
-
 app.listen(PORT, () => {
-    console.log('Server started on http://localhost:'+PORT);
+  console.log('Server started on http://localhost:'+PORT);
 });
