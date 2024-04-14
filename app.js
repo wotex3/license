@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const apiKeys = {
   ['DWAZqDyR0F8SzdcBlti2']: true,
-  ['xx']: true,
+  ['bbbb']: true,
 }
 
 // const linksx = {
