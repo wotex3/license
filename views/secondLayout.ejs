@@ -13,7 +13,6 @@
     <style>   
 
         /* @import "https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"; */
-
         * {
             padding: 0;
             text-decoration: none;
@@ -41,7 +40,7 @@
         }
 
         body {
-            background: radial-gradient(ellipse at bottom, #24222e 0%, #0c0d13 100%);
+            background: radial-gradient(ellipse at bottom, #09090B 0%, rgb(15, 15, 17) 100%);
         }
 
         canvas {
@@ -64,9 +63,8 @@
             transform: translate(-50%, -50%);
             width: 50%;
             height: 70%;
-            background-color: #191721;
-            border: 3px solid #272630;
-            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            background-color: #09090B;
+            border: 1px solid #5a585896;
             border-radius: 3px;
         }
 
@@ -93,17 +91,16 @@
             left: 50%;
             transform: translate(-50%);
             width: 97%;
-            height: 3rem;
-            background-color: #25222e;
-            margin-bottom: 0.5rem;
-            border-radius: 3px;
+            height: 3.2rem;
+            margin-bottom: 0.3rem;
             cursor: pointer;
+            border-bottom: 1px solid #5a585896;
         }
 
         .license>span {
             position: absolute;
             top: 29%;
-            left: 0.7rem;
+            left: 0.2rem;
             color: white;
             font-size: 15px;
             font-weight: 600;
@@ -113,7 +110,7 @@
         .license>h5 {
             position: absolute;
             top: 71.5%;
-            left: 0.7rem;
+            left: 0.2rem;
             width: max-content;
             color: rgb(201, 198, 198);
             font-size: 12px;
@@ -587,16 +584,23 @@
         .cfxStatus {
             position: absolute;
             top: 11%;
-            right: 24.2%;
+            right: 24%;
             transform: translate(-50%, -50%);
             color: #F44D47;
+            border-radius: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #09090B;
+            border: 1px solid #5a585896;
+            padding: 0.5rem;
         }
 
     </style>
 </head>
 <body>
     <div class="manasgament">
-        <svg class="cfxStatus" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="2em" width="2em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M7,12 L11,15 L16,8"></path></svg>
+        <svg class="cfxStatus" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="2.5em" width="2.5em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M7,12 L11,15 L16,8"></path></svg>
         <div class="lockauth"><lockauthh>LockAuth</lockauthh>© 2024 <a href="https://discord.com/users/1037346625057730560" target="_blank">Ayaz</a> & <a href="https://discord.com/users/1037343835589713941" target="_blank">Wotex</a></div>
         <div class="resources">
             <h2 class="licensed-ips">Licenses</h2>
@@ -1193,8 +1197,8 @@
             window.addEventListener('resize', this.onResize);
         }
         }
-        const smoke = new Smoke();
-        smoke.update();
+        // const smoke = new Smoke();
+        // smoke.update();
     </script> 
 </body>
 </html>
