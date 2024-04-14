@@ -39,8 +39,7 @@ mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.ne
 });
 
 app.get('/auth', async (req, res) => {
-  // const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
-  const userip = '83.248.181.96'
+  const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
   if (req.body === undefined || req.body === null) { 
     res.send('DUNYA GUL BANA')
     return;          
@@ -60,12 +59,8 @@ app.get('/auth', async (req, res) => {
   const successString = obfuscateStr('success-'+deKey)
   for (const key in req.body) {
     if (req.body.hasOwnProperty(key)) {
-      req.body[key] = deobfuscateStr(req.body[key]);
-    }
-  }
-  for (const key in req.body) {
-    if (req.body.hasOwnProperty(key)) {
-      req.body[key] = obfuscateStr('success-'+req.body[key])
+      let deb = req.body[key] = deobfuscateStr(req.body[key]);
+      req.body[key] = obfuscateStr('success-'+deb)
     }
   }
   Customer.find({ ip: userip }, function (err, customers) {
@@ -87,7 +82,6 @@ app.get('/auth', async (req, res) => {
           res.send('Expired')
         }).catch((err) => res.send('333'));
       } else {
-        req.body['gkbquwgs'] = successString
         res.send(req.body)
       }
     }
