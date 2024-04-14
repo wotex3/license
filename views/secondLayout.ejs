@@ -59,11 +59,11 @@
         
         .resources {
             position: absolute;
-            top: 40%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 50%;
-            height: 50%;
+            height: 70%;
             background-color: #191721;
             border: 3px solid #272630;
             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -584,21 +584,24 @@
             font-size: 15px;
         }
 
+        .cfxStatus {
+            position: absolute;
+            top: 11%;
+            right: 24.2%;
+            transform: translate(-50%, -50%);
+            color: #F44D47;
+        }
+
     </style>
 </head>
 <body>
     <div class="manasgament">
+        <svg class="cfxStatus" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="2em" width="2em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M7,12 L11,15 L16,8"></path></svg>
         <div class="lockauth"><lockauthh>LockAuth</lockauthh>© 2024 <a href="https://discord.com/users/1037346625057730560" target="_blank">Ayaz</a> & <a href="https://discord.com/users/1037343835589713941" target="_blank">Wotex</a></div>
         <div class="resources">
             <h2 class="licensed-ips">Licenses</h2>
             <button class="createlicense-btn"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="18px" width="18px" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path><path d="M12 8v8"></path></svg><span>Create license</span></button>
             <div class="appendplace"></div>
-
-        </div>
-        <div class="uptime">
-            <div class="uptime-btn">
-                <span>cfx.re - Keymaster</span>
-            </div>
         </div>
         <div id="myModal" class="modal">
             <div class="modal-content">
@@ -633,9 +636,9 @@
             // Create
 
             var data = <%- JSON.stringify(data) %>
-            var links = <%- JSON.stringify(links) %>
+            var cfxUptime = <%- statusCfx %>
             UpdateData(JSON.stringify(data))
-            UpdateLinksData(JSON.stringify(links))
+            UpdateCfxUptime(cfxUptime)
 
             $(document).on('click', '.createlicense-btn', function (event) {
                 // $('#myModal3').css('display', 'block');
@@ -985,27 +988,56 @@
             }
         }
 
-        function UpdateLinksData(links) {
-            data = JSON.parse(links)
-            $('.uptime').html('')
-            $.each(data, function(k, v) {
-                let icon = '';
-                let color = '';
-                if (v.status == true) {
-                    icon = '<svg stroke="#12ad7f" fill="#12ad7f" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M7,12 L11,15 L16,8"></path></svg>';
-                    color = '#12ad7f'
-                } else {
-                    icon = '<svg stroke="#F44D47" fill="#F44D47" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M7,12 L11,15 L16,8"></path></svg>';
-                    color = '#F44D47'
-                }
-                $('.uptime').append(` 
-                <div class="uptime-btn">
-                    <span style="color: ${color}">${v.label}</span>
-                    ${icon}
-                </div>
-                `)
-            })
+        function UpdateCfxUptime(status) {
+            console.log(status)
+            if (status == true) {
+                console.log('ASDSA')
+                $('.cfxStatus').css('color', '#12ad7f')
+            } else {
+                $('.cfxStatus').css('color', '#F44D47')
+            }
+            // data = JSON.parse(links)
+            // $('.uptime').html('')
+            // $.each(data, function(k, v) {
+            //     let icon = '';
+            //     let color = '';
+            //     if (v.status == true) {
+            //         icon = '<svg stroke="#12ad7f" fill="#12ad7f" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M7,12 L11,15 L16,8"></path></svg>';
+            //         color = '#12ad7f'
+            //     } else {
+            //         icon = '<svg stroke="#F44D47" fill="#F44D47" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M7,12 L11,15 L16,8"></path></svg>';
+            //         color = '#F44D47'
+            //     }
+            //     $('.uptime').append(` 
+            //     <div class="uptime-btn">
+            //         <span style="color: ${color}">${v.label}</span>
+            //         ${icon}
+            //     </div>
+            //     `)
+            // })
         }
+
+        // function UpdateLinksData(links) {
+        //     data = JSON.parse(links)
+        //     $('.uptime').html('')
+        //     $.each(data, function(k, v) {
+        //         let icon = '';
+        //         let color = '';
+        //         if (v.status == true) {
+        //             icon = '<svg stroke="#12ad7f" fill="#12ad7f" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M7,12 L11,15 L16,8"></path></svg>';
+        //             color = '#12ad7f'
+        //         } else {
+        //             icon = '<svg stroke="#F44D47" fill="#F44D47" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M7,12 L11,15 L16,8"></path></svg>';
+        //             color = '#F44D47'
+        //         }
+        //         $('.uptime').append(` 
+        //         <div class="uptime-btn">
+        //             <span style="color: ${color}">${v.label}</span>
+        //             ${icon}
+        //         </div>
+        //         `)
+        //     })
+        // }
 
         class Smoke {
         constructor(options) {
