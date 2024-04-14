@@ -39,7 +39,8 @@ mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.ne
 });
 
 app.get('/auth', async (req, res) => {
-  const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
+  // const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
+  const userip = '83.248.181.96'
   if (req.body === undefined || req.body === null) { 
     res.send('DUNYA GUL BANA')
     return;          
@@ -55,8 +56,18 @@ app.get('/auth', async (req, res) => {
     return
   }
   const key = req.body.gkbquwgs;
-  const deobfusactedRandomNumber = deobfuscateStr(key);
-  const successString = obfuscateStr('success-'+key)
+  const deKey = deobfuscateStr(key);
+  const successString = obfuscateStr('success-'+deKey)
+  for (const key in req.body) {
+    if (req.body.hasOwnProperty(key)) {
+      req.body[key] = deobfuscateStr(req.body[key]);
+    }
+  }
+  for (const key in req.body) {
+    if (req.body.hasOwnProperty(key)) {
+      req.body[key] = obfuscateStr('success-'+req.body[key])
+    }
+  }
   Customer.find({ ip: userip }, function (err, customers) {
     if (err) {
       console.error("Veritabanı hatası:", err);
@@ -73,12 +84,11 @@ app.get('/auth', async (req, res) => {
           { ip: userip },
         )
         .then(() => {
-          // Customer.find({}, function (err, obj) {
           res.send('Expired')
-        //   })
         }).catch((err) => res.send('333'));
       } else {
-        res.send(successString)
+        req.body['gkbquwgs'] = successString
+        res.send(req.body)
       }
     }
   })
