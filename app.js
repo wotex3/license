@@ -294,9 +294,9 @@ function obfuscateStr(str) {
 
 app.get('/auth', async (req, res) => {
   const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
-  const randomNumber = req.query.randomNumber;
-  const deobfusactedRandomNumber = deobfuscateStr(randomNumber);
-  const successString = obfuscateStr('success-'+deobfusactedRandomNumber)
+  const key = req.query.key;
+  const deobfusactedRandomNumber = deobfuscateStr(key);
+  const successString = obfuscateStr('success-'+key)
   Customer.find({ ip: userip }, function (err, customers) {
     if (err) {
       console.error("Veritabanı hatası:", err);
