@@ -962,6 +962,8 @@
 
         function UpdateData(data) {
             data = JSON.parse(data)
+            window.location.reload();
+
             if (data.length == 0) {
                 $('.not-licenseyet').remove()
                 $('.appendplace').append(`
