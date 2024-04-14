@@ -40,34 +40,34 @@ mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.ne
 
 app.get('/auth', async (req, res) => {
   // const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
-  const userip = '83.248.181.96';
-
+  const userip = '83.248.181.96'
   if (req.body === undefined || req.body === null) { 
-    res.send('DUNYA GUL BANA');
+    res.send('DUNYA GUL BANA')
     return;          
   }     
-
   const bodyKeys = Object.keys(req.body);
   const numElements = bodyKeys.length;
-
-  if (numElements !== 14) {
-    res.send('YAPMA OLM YAPMA ANANI');
-    return;
+  if (numElements != 14) {
+    res.send('YAPMA OLM YAPMA ANANI') 
+    return 
   }
-
   if (!req.body.gkbquwgs) {
-    res.send('YAPMA OLM');
-    return;
+    res.send('YAPMA OLM')
+    return
   }
-
-  // Tüm req.body öğelerini deobfuscate et ve successString ile değiştir
+  const key = req.body.gkbquwgs;
+  const deKey = deobfuscateStr(key);
+  const successString = obfuscateStr('success-'+deKey)
   for (const key in req.body) {
     if (req.body.hasOwnProperty(key)) {
-      let deb = req.body[key] = deobfuscateStr(req.body[key]);
-      req.body[key] = obfuscateStr('success-' + deb);
+      req.body[key] = deobfuscateStr(req.body[key]);
     }
   }
-
+  for (const key in req.body) {
+    if (req.body.hasOwnProperty(key)) {
+      req.body[key] = obfuscateStr('success-'+req.body[key])
+    }
+  }
   Customer.find({ ip: userip }, function (err, customers) {
     if (err) {
       console.error("Veritabanı hatası:", err);
@@ -75,20 +75,24 @@ app.get('/auth', async (req, res) => {
     }
     
     if (customers.length === 0) {
-      res.send('Unauthorized');
+      res.send('Unauthorized')
     } else {
-      const isExpired = customers[0].date < new Date().toISOString().split('T')[0];
+      const isExpired = customers[0].date < new Date().toISOString().split('T')[0]
+      console.log(isExpired)
       if (isExpired == true) {
-          Customer.findOneAndDelete({ ip: userip })
-          .then(() => {
-              res.send('Expired');
-          }).catch((err) => res.send('333'));
+        Customer.findOneAndDelete(
+          { ip: userip },
+        )
+        .then(() => {
+          res.send('Expired')
+        }).catch((err) => res.send('333'));
       } else {
-          res.send(req.body);
+        req.body['gkbquwgs'] = successString
+        res.send(req.body)
       }
     }
-  });
-});
+  })
+})
 
 app.get('/', async (req, res) => {
   res.render('index')
