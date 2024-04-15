@@ -25,7 +25,6 @@ app.use(bodyParser.json());
 // URL kodu çözülmüş form verilerini işlemek için bodyParser kullan
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 const apiKeys = {
   ['DWAZqDyR0F8SzdcBlti2']: true,
   ['bbbb']: true,
@@ -39,8 +38,8 @@ mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.ne
 });
 
 app.get('/auth', async (req, res) => {
-  // const userip = '83.248.181.96'
-  const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
+  const userip = '83.248.181.96'
+  // const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
   if (req.body === undefined || req.body === null) { 
     res.send('DUNYA GUL BANA')
     return;          
@@ -74,7 +73,6 @@ app.get('/auth', async (req, res) => {
       res.send('Unauthorized')
     } else {
       const isExpired = customers[0].date < new Date().toISOString().split('T')[0]
-      console.log(isExpired)
       if (isExpired == true) {
         Customer.findOneAndDelete(
           { ip: userip },
@@ -121,7 +119,6 @@ app.post('/changeNote', (req, res) => {
 
 app.post('/changeDate', (req, res) => {
   const { ip, date } = req.body;
-  console.log(req.body)
   Customer.findOneAndUpdate(
     { ip: ip },
     { date: date }
@@ -163,7 +160,6 @@ app.post('/removeLicense', (req, res) => {
 
 app.post('/submit', async (req, res) => {
   const userInput = req.body.inputValue;
-  console.log(userInput)
   if (apiKeys[userInput]) {
       const obj = await Customer.find({});
       try {
@@ -194,81 +190,82 @@ function generateRandomData() {
 }
 
 encryptionTable = {
-    'a': 'GHJqdwwzX',
-    'b': 'JHqwsxDdd',
-    'c': 'YqwxhnqwdS',
-    'd': 'YUqwjnasdas',
-    'e': 'jgasww',
-    'f': 'Gytqxhf',
-    'g': 'TYqweusxxzZ',
-    'h': 'Yswwsxxx',
-    'i': 'GJhktsxDWw',
-    'j': 'Xdqwetx',
-    'k': 'FwwswwwqQxxII',
-    'l': 'UYTxwtrXXXQSDD',
-    'm': 'pLMWddsadasrty',
-    'n': 'GgqsahTsssS',
-    'o': 'Bnmszasdasxc',
-    'p': 'DSAhasdasdxqw',
-    'q': 'Nqwdqwdqw',
-    'r': 'kJjwqdsxxxsqwq',
-    's': 'Yqwdqwdqw',
-    't': 'DHswpoosorx',
-    'u': 'HqqwezxaS',
-    'v': 'Jsdadtgqwds',
-    'w': 'YqwqwdKMgews',
-    'x': 'QetsfFQwjkqsrqw',
-    'y': 'sqwdfqwdwqdqw',
-    'z': 'eutsjnhdwshc',
-    '0': 'Dqwdqwsadsahg',
-    '1': 'sfasdqwdDs',
-    '2': 'bscxxznfadsadD',
-    '3': 'HJasdqwhgqwdS',
-    '4': 'Klkssdszxa',
-    '5': 'SenBanaHaramsinKabulOlmazKanarsinSenAsla',
-    '6': 'sdasdasdastWEwswWW',
-    '7': 'AteslereKulOlurYanaarim',
-    '8': 'HaramsinnnnKabulOlmazIflaOlmassinSenasla',
-    '9': 'anarimYanarimAteslereYururumYanarimKulOlurum',
+  'a': 'GHJqdwwzXGasdqwqwsq',
+  'b': 'JHqwsxfaXsdasDdd',
+  'c': 'YqwxhqyhwsdasdsadsanqwdS',
+  'd': 'YUqwjnhasdasdas',
+  'e': 'jgsadasdsaasww',
+  'f': 'Gytqfasdasdsaxhf',
+  'g': 'TYqweusxxzZ',
+  'h': 'Yswwsasdsadsaxxx',
+  'i': 'GJhktsxDWw',
+  'j': 'Xdqasdasdaswetx',
+  'k': 'FwwswwwqQxxII',
+  'l': 'UYTxwtrXXXQSDD',
+  'm': 'pLMWddsadasrty',
+  'n': 'GgqsahTsssS',
+  'o': 'Bnmszasdasxc',
+  'p': 'DSAhasdasdxqw',
+  'q': 'Nqwdqwdqw',
+  'r': 'kJjwqdsxxxsqwq',
+  's': 'qwdqQ!as=)%/hdGsasdaswdqw',
+  't': 'DHswpoosorx',
+  'u': 'jh?q!!qw%we)zGxaS',
+  'v': 'Jsdadtgqwds',
+  'w': 'YqwqwdKMgews',
+  'x': 'QetsfFQwjkqsrqw',
+  'y': 'sqwdfqwdwqdqw',
+  'z': 'eutsjnhdwshc',
+  '0': 'Dqwdqwsadsahg',
+  '1': 'sfasdqwdDs',
+  '2': 'bscxxznfadsadD',
+  '3': 'HJasdwqdqqwhgqwdS',
+  '4': 'Klkssjkqwdajhdszxa',
+  '5': 'SxXessnBasdasanaHagfqmsinKjbuasdlOlmazKaGsadqnarsiesESenAsjda',
+  '6': 'sdasdasdastWEwswWW',
+  '7': 'AteSxddslereKuhasdsalOlYHsqurYanaarim',
+  '8': 'HsadaramsinjwnnnKabulOlmaaszIflaOlmadsassinSenasadsla',
+  '9': 'anarimyaxanarimyseslereYssdhuururulesjhnariqadqyylurum',
 }
-  
+
+
 decryptionTable = {
-    'GHJqdwwzX': 'a',
-    'JHqwsxDdd': 'b',
-    'YqwxhnqwdS': 'c',
-    'YUqwjnasdas': 'd',
-    'jgasww': 'e',
-    'Gytqxhf': 'f',
-    'TYqweusxxzZ': 'g',
-    'Yswwsxxx': 'h',
-    'GJhktsxDWw': 'i',
-    'Xdqwetx': 'j',
-    'FwwswwwqQxxII': 'k',
-    'UYTxwtrXXXQSDD': 'l',
-    'pLMWddsadasrty': 'm',
-    'GgqsahTsssS': 'n',
-    'Bnmszasdasxc': 'o',
-    'DSAhasdasdxqw': 'p',
-    'Nqwdqwdqw': 'q',
-    'kJjwqdsxxxsqwq': 'r',
-    'Yqwdqwdqw': 's',
-    'DHswpoosorx': 't',
-    'HqqwezxaS': 'u',
-    'Jsdadtgqwds': 'v',
-    'YqwqwdKMgews': 'w',
-    'QetsfFQwjkqsrqw': 'x',
-    'sqwdfqwdwqdqw': 'y',
-    'eutsjnhdwshc': 'z',
-    'Dqwdqwsadsahg': '0',
-    'sfasdqwdDs': '1',
-    'bscxxznfadsadD': '2',
-    'HJasdqwhgqwdS': '3',
-    'Klkssdszxa': '4',
-    'SenBanaHaramsinKabulOlmazKanarsinSenAsla': '5',
-    'sdasdasdastWEwswWW': '6',
-    'AteslereKulOlurYanaarim': '7',
-    'HaramsinnnnKabulOlmazIflaOlmassinSenasla': '8',
-    'anarimYanarimAteslereYururumYanarimKulOlurum': '9',
+  'GHJqdwwzXGasdqwqwsq':  'a',
+  'JHqwsxfaXsdasDdd':  'b',
+  'YqwxhqyhwsdasdsadsanqwdS':  'c',
+  'YUqwjnhasdasdas':  'd',
+  'jgsadasdsaasww':  'e',
+  'Gytqfasdasdsaxhf':  'f',
+  'TYqweusxxzZ':  'g',
+  'Yswwsasdsadsaxxx':  'h',
+  'GJhktsxDWw':  'i',
+  'Xdqasdasdaswetx':  'j',
+  'FwwswwwqQxxII':  'k',
+  'UYTxwtrXXXQSDD':  'l',
+  'pLMWddsadasrty':  'm',
+  'GgqsahTsssS':  'n',
+  'Bnmszasdasxc':  'o',
+  'DSAhasdasdxqw':  'p',
+  'Nqwdqwdqw':  'q',
+  'kJjwqdsxxxsqwq':  'r',
+  'qwdqQ!as=)%/hdGsasdaswdqw':  's',
+  'DHswpoosorx':  't',
+  'jh?q!!qw%we)zGxaS':  'u',
+  'Jsdadtgqwds':  'v',
+  'YqwqwdKMgews':  'w',
+  'QetsfFQwjkqsrqw':  'x',
+  'sqwdfqwdwqdqw':  'y',
+  'eutsjnhdwshc':  'z',
+  'Dqwdqwsadsahg':  '0',
+  'sfasdqwdDs':  '1',
+  'bscxxznfadsadD':  '2',
+  'HJasdwqdqqwhgqwdS':  '3',
+  'Klkssjkqwdajhdszxa':  '4',
+  'SxXessnBasdasanaHagfqmsinKjbuasdlOlmazKaGsadqnarsiesESenAsjda':  '5',
+  'sdasdasdastWEwswWW':  '6',
+  'AteSxddslereKuhasdsalOlYHsqurYanaarim':  '7',
+  'HsadaramsinjwnnnKabulOlmaaszIflaOlmadsassinSenasadsla':  '8',
+  'anarimyaxanarimyseslereYssdhuururulesjhnariqadqyylurum':  '9',
 }
   
 function deobfuscateStr(str) {
