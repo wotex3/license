@@ -90,6 +90,22 @@ app.get('/auth', async (req, res) => {
 
 app.get('/', async (req, res) => {
   res.render('index')
+  
+  // const obj = await Customer.find({});
+  // try {
+  //   cfxReIsActive = true;
+  //   const response = await axios.get(cfxURL);
+  //   if (response.status === 200) {
+  //     // console.log(response.data.status.description)
+  //     if (response.data.status.description != 'All Systems Operational') {
+  //       cfxReIsActive = false;
+  //     }
+  //   }
+  //   res.render('secondLayout', { data: obj, statusCfx: cfxReIsActive }); 
+  // } catch (err) {
+  //   res.redirect('/');
+  //   throw err;
+  // }
 });
 
 app.post('/changeIp', (req, res) => {

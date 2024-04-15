@@ -596,6 +596,25 @@
             padding: 0.5rem;
         }
 
+        .sort-input {
+            position: absolute;
+            top: 0.95rem;
+            right: 0.95rem;
+            z-index: 999;
+            padding-left: 0.5rem;
+            padding-bottom: 0.2rem;
+            width: 10rem;
+            height: 2rem;
+            background-color: #09090B;
+            border: 1px solid #5a585896;
+            border-radius: 3px;
+            font-size: 13px;
+            font-weight: 500;
+            color: white;
+            border-radius: 2px;
+            transition: all ease 100ms;
+        }
+
     </style>
 </head>
 <body>
@@ -604,6 +623,7 @@
         <div class="lockauth"><lockauthh>LockAuth</lockauthh>© 2024 <a href="https://discord.com/users/1037346625057730560" target="_blank">Ayaz</a> & <a href="https://discord.com/users/1037343835589713941" target="_blank">Wotex</a></div>
         <div class="resources">
             <h2 class="licensed-ips">Licenses</h2>
+            <input type="text" class="sort-input" placeholder="Filter">
             <button class="createlicense-btn"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="18px" width="18px" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path><path d="M12 8v8"></path></svg><span>Create license</span></button>
             <div class="appendplace"></div>
         </div>
@@ -968,12 +988,21 @@
             if (typeof(data) == 'string') {
                 data = JSON.parse(data)
             }
+            $('.sort-input').val('');
+            $('.sort-input').on('input', function () {
+                var inputValue = $(this).val().toLowerCase();
+                $(".license").filter(function () {
+                    var containerText = $(this).text().toLowerCase();
+                    $(this).toggle(containerText.indexOf(inputValue) > -1);
+                });
+            });
             if (data.length == 0) {
                 $('.not-licenseyet').remove()
                 $('.appendplace').append(`
                     <p class="not-licenseyet"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2H6zm10 14.5V20H8v-3.5l4-4 4 4zm-4-5-4-4V4h8v3.5l-4 4z"></path></svg></p>
                 `)
             } else {
+                $('')
                 $('.not-licenseyet').remove()
                 $('.appendplace').html('')
                 $.each(data, function(k, v) {
