@@ -81,6 +81,7 @@ app.get('/auth', async (req, res) => {
           res.send('Expired')
         }).catch((err) => res.send('333'));
       } else {
+        console.log(req.body)
         res.send(req.body)
       }
     }
