@@ -38,8 +38,8 @@ mongoose.connect('mongodb+srv://wht3636:Berkberk2002@cluster0.l7zokyy.mongodb.ne
 });
 
 app.get('/auth', async (req, res) => {
-  const userip = '83.248.181.96'
-  // const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
+  // const userip = '83.248.181.96'
+  const userip = req.headers["x-real-ip"] || req.socket.remoteAddress || 'Null-IpAdres';
   if (req.body === undefined || req.body === null) { 
     res.send('DUNYA GUL BANA')
     return;          
