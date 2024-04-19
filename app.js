@@ -54,9 +54,7 @@ app.get('/auth', async (req, res) => {
     res.send('YAPMA OLM')
     return
   }
-  const key = req.body.gkbquwgs;
-  const deKey = deobfuscateStr(key);
-  const successString = obfuscateStr('success-'+deKey)
+  // const key = req.body.gkbquwgs;
   for (const key in req.body) {
     if (req.body.hasOwnProperty(key)) {
       let deb = req.body[key] = deobfuscateStr(req.body[key]);
@@ -81,7 +79,6 @@ app.get('/auth', async (req, res) => {
           res.send('Expired')
         }).catch((err) => res.send('333'));
       } else {
-        console.log(req.body)
         res.send(req.body)
       }
     }
